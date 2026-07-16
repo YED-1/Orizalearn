@@ -1,0 +1,30 @@
+# frontOri/Dockerfile
+
+# --- Etapa 1: Construcción (Build) ---
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copiar package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar dependencias
+RUN npm install
+
+# Copiar el resto del código
+COPY . .
+
+# Construir la aplicación para producción (Vite generará la carpeta /dist)
+RUN npm run build
+
+# --- Etapa 2: Producción (Servir con Nginx) ---
+FROM nginx:alpine
+
+# Copiar los archivos compilados de la etapa anterior a la carpeta pública de Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Exponer el puerto web estándar
+EXPOSE 80
+
+# Iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]
