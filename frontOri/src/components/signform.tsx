@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Lock, ArrowRight, User } from "lucide-react"; // Importamos 'User'
+import { Mail, Lock, ArrowRight, User } from "lucide-react"; // Importar User
 import { Link } from "react-router-dom";
 
 export default function SignForm() {
@@ -12,7 +12,13 @@ export default function SignForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Aquí irá la lógica de conexión a la API (FastAPI)
-    console.log("Registrando nuevo usuario:", { nombre, apellido, email });
+    console.log("Registrando nuevo usuario:", {
+      nombre,
+      apellido,
+      email,
+      password,
+      confirmpassword,
+    }); // Por el momento estas para el registro
   };
 
   return (
