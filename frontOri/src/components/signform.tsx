@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Mail, Lock, ArrowRight, User } from "lucide-react"; // Importar User
+import { Mail, Lock, ArrowRight, User, Calendar } from "lucide-react"; // Importar User
 import { Link } from "react-router-dom";
 
 export default function SignForm() {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [genero, setGenero] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfpassword] = useState("");
 
@@ -16,6 +18,8 @@ export default function SignForm() {
       nombre,
       apellido,
       email,
+      fechaNacimiento,
+      genero,
       password,
       confirmpassword,
     }); // Por el momento estas para el registro
@@ -105,6 +109,52 @@ export default function SignForm() {
               className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
               placeholder="**@correo.com"
             />
+          </div>
+        </div>
+
+        {/* Campo de fecha de nacimiento */}
+        <div>
+          <label
+            className="block text-sm font-medium text-oriza-header mb-2"
+            htmlFor="date"
+          >
+            Fecha de nacimiento
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Calendar className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="date"
+              required
+              value={fechaNacimiento}
+              onChange={(e) => setFechaNacimiento(e.target.value)}
+              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+            />
+          </div>
+        </div>
+
+        {/* Selección de Género */}
+        <div>
+          <label className="block text-sm font-medium text-oriza-header mb-2">
+            Género
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Calendar className="h-5 w-5 text-gray-400" />
+            </div>
+            <select
+              required
+              value={genero}
+              onChange={(e) => setGenero(e.target.value)}
+              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+            >
+              <option value="">Seleccione su género</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
+              <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+            </select>
           </div>
         </div>
 
