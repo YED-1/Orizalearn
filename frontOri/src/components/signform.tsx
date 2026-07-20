@@ -11,18 +11,43 @@ export default function SignForm() {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfpassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí irá la lógica de conexión a la API (FastAPI)
-    console.log("Registrando nuevo usuario:", {
+
+    const payload = {
       nombre,
       apellido,
       email,
-      fechaNacimiento,
-      genero,
       password,
-      confirmpassword,
-    }); // Por el momento estas para el registro
+      confirm_password: confirmpassword,
+      // Valores necesarios para cumplir con el esquema de Pydantic
+      fecha_nacimiento: "2000-01-01",
+      genero: "Masculino",
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("¡Registro exitoso!", data);
+        alert("¡Cuenta creada correctamente!");
+        // Aquí podrías redirigir al login usando navigate("/login")
+      } else {
+        console.error("Error del servidor:", data);
+        alert("Error: " + (data.detail || "No se pudo registrar"));
+      }
+    } catch (error) {
+      console.error("Error de red:", error);
+      alert(
+        "No se pudo conectar con el servidor. Asegúrate de que FastAPI esté corriendo.",
+      );
+    }
   };
 
   return (
