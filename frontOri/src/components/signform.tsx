@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Lock, ArrowRight, User, Calendar } from "lucide-react"; // Importar User
+import { Mail, Lock, ArrowRight, User, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function SignForm() {
@@ -11,8 +11,20 @@ export default function SignForm() {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfpassword] = useState("");
 
+  // Estados para manejar los mensajes limpios en la UI (en lugar de alert)
+  const [mensajeError, setMensajeError] = useState("");
+  const [mensajeExito, setMensajeExito] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMensajeError("");
+    setMensajeExito("");
+
+    // 1. Validar que las contraseñas coincidan antes de enviar
+    if (password !== confirmpassword) {
+      setMensajeError("Las contraseñas no coinciden.");
+      return;
+    }
 
     const payload = {
       nombre,
@@ -20,9 +32,8 @@ export default function SignForm() {
       email,
       password,
       confirm_password: confirmpassword,
-      // Valores necesarios para cumplir con el esquema de Pydantic
-      fecha_nacimiento: "2000-01-01",
-      genero: "Masculino",
+      fecha_nacimiento: fechaNacimiento,
+      genero: genero,
     };
 
     try {
@@ -35,16 +46,13 @@ export default function SignForm() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("¡Registro exitoso!", data);
-        alert("¡Cuenta creada correctamente!");
-        // Aquí podrías redirigir al login usando navigate("/login")
+        setMensajeExito("¡Cuenta creada correctamente!");
+        // Aquí podrías redirigir al login si lo deseas: navigate("/login") "COMENTARIO DE LA IA"
       } else {
-        console.error("Error del servidor:", data);
-        alert("Error: " + (data.detail || "No se pudo registrar"));
+        setMensajeError(data.detail || "Error al registrar la cuenta.");
       }
-    } catch (error) {
-      console.error("Error de red:", error);
-      alert(
+    } catch {
+      setMensajeError(
         "No se pudo conectar con el servidor. Asegúrate de que FastAPI esté corriendo.",
       );
     }
@@ -61,10 +69,23 @@ export default function SignForm() {
         </p>
       </div>
 
+      {/* Alerta visual de Error */}
+      {mensajeError && (
+        <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm text-center">
+          {mensajeError}
+        </div>
+      )}
+
+      {/* Alerta visual de Éxito */}
+      {mensajeExito && (
+        <div className="mb-6 p-3 bg-green-50 border border-green-200 text-green-600 rounded-lg text-sm text-center">
+          {mensajeExito}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Grid para poner Nombre y Apellido en la misma fila */}
         <div className="grid grid-cols-2 gap-4">
-          {/* Campo de Nombre */}
           <div>
             <label
               className="block text-sm font-medium text-oriza-header mb-2"
@@ -88,7 +109,6 @@ export default function SignForm() {
             </div>
           </div>
 
-          {/* Campo de Apellido */}
           <div>
             <label
               className="block text-sm font-medium text-oriza-header mb-2"
@@ -132,7 +152,7 @@ export default function SignForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
-              placeholder="**@correo.com"
+              placeholder="correo@correo.com"
             />
           </div>
         </div>
@@ -166,13 +186,13 @@ export default function SignForm() {
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Calendar className="h-5 w-5 text-gray-400" />
+              <User className="h-5 w-5 text-gray-400" />
             </div>
             <select
               required
               value={genero}
               onChange={(e) => setGenero(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none bg-white"
             >
               <option value="">Seleccione su género</option>
               <option value="Masculino">Masculino</option>
@@ -207,7 +227,7 @@ export default function SignForm() {
           </div>
         </div>
 
-        {/* Campo de  Confirmar Contraseña */}
+        {/* Campo de Confirmar Contraseña */}
         <div>
           <label
             className="block text-sm font-medium text-oriza-header mb-2"
