@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Logo / Título */}
         <div className="h-16 flex items-center px-6 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-blue-900 tracking-tight">
-            Oriza LMS
+            OrizaLearn
           </h1>
         </div>
 
