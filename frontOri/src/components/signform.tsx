@@ -10,8 +10,6 @@ export default function SignForm() {
   const [genero, setGenero] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfpassword] = useState("");
-
-  // Estados para manejar los mensajes limpios en la UI (en lugar de alert)
   const [mensajeError, setMensajeError] = useState("");
   const [mensajeExito, setMensajeExito] = useState("");
 

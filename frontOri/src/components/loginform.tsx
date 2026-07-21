@@ -1,15 +1,54 @@
 import { useState } from "react";
 import { Mail, Lock, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Añadimos useNavigate
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Estados para manejar los mensajes de éxito o error
+  const [mensajeError, setMensajeError] = useState("");
+  const [mensajeExito, setMensajeExito] = useState("");
+
+  // Inicializamos el hook de navegación
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí irá la lógica de conexión a la API (FastAPI)
-    console.log("Intentando iniciar sesión con:", email);
+
+    // Limpiamos mensajes previos
+    setMensajeError("");
+    setMensajeExito("");
+
+    const payload = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMensajeExito("¡Inicio de sesión exitoso!");
+        // Redirigimos al dashboard tras el éxito
+        localStorage.setItem("userName", data.nombre || email);
+        navigate("/dashboard");
+      } else {
+        setMensajeError(
+          data.detail || "Error al iniciar sesión. Verifica tus credenciales.",
+        );
+      }
+    } catch {
+      setMensajeError(
+        "No se pudo conectar con el servidor. Asegúrate de que FastAPI esté corriendo.",
+      );
+    }
   };
 
   return (
@@ -22,6 +61,18 @@ export default function LoginForm() {
           Ingresa tus credenciales para continuar tu aprendizaje.
         </p>
       </div>
+
+      {/* Alertas de error o éxito */}
+      {mensajeError && (
+        <div className="mb-6 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center font-medium">
+          {mensajeError}
+        </div>
+      )}
+      {mensajeExito && (
+        <div className="mb-6 p-3 bg-green-100 text-green-700 rounded-lg text-sm text-center font-medium">
+          {mensajeExito}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Campo de Correo */}
