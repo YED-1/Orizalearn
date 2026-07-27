@@ -18,7 +18,7 @@ export default function SignForm() {
     setMensajeError("");
     setMensajeExito("");
 
-    // 1. Validar que las contraseñas coincidan antes de enviar
+    // Validar que las contraseñas coincidan antes de enviar
     if (password !== confirmpassword) {
       setMensajeError("Las contraseñas no coinciden.");
       return;

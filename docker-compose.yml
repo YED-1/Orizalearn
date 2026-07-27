@@ -30,6 +30,7 @@ services:
       - POSTGRES_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./api:/app
 
 volumes:
   postgres_data:
