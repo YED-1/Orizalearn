@@ -6,8 +6,8 @@ class ModuloBase(BaseModel):
     titulo: str
     orden: int
     tipo_modulo: str  # Ejemplo: "teoria", "sandbox_python", "quiz"
-    contenido_texto: Optional[str] = None
-    recurso_url: Optional[str] = None
+    contenido_texto: Optional[str] = None #Contenido del módulo
+    recurso_url: Optional[str] = None # Multimedia Youtube, PDF, documentación oficial
 
 class ModuloCreate(ModuloBase):
     pass
