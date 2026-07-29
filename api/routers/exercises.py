@@ -1,14 +1,47 @@
 import docker
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from typing import List
 from pydantic import BaseModel
+from core.database import get_db
+from models.course import Module, Ejercicio
+from schemas.exercise import EjercicioCreate, EjercicioResponse
 
-router = APIRouter()
 
+router = APIRouter(prefix="/ejercicios", tags=["Ejercicios"])
 # Nos conectamos al socket de Docker que mapeamos en el compose
 client = docker.from_env()
 
 class EjecucionRequest(BaseModel):
     codigo: str
+
+# Enpoints de ejercicios
+
+@router.post("/crear", response_model=EjercicioResponse, status_code=201)
+def crear_ejercicio(ejercicio: EjercicioCreate, db: Session = Depends(get_db)):
+    # Validar que el módulo al que se asigna el ejercicio exista
+    modulo_existente = db.query(Module).filter(Module.id == ejercicio.modulo_id).first()
+    if not modulo_existente:
+        raise HTTPException(status_code=404, detail="El módulo especificado no existe")
+    # Guardar el ejercicio en BD
+    nuevo_ejercicio = Ejercicio(**ejercicio.model_dump())
+    db.add(nuevo_ejercicio)
+    db.commit()
+    db.refresh(nuevo_ejercicio)
+    
+    return nuevo_ejercicio
+
+@router.get("/modulo/{modulo_id}", response_model=List[EjercicioResponse])
+def obtener_ejercicios_por_modulo(modulo_id: int, db: Session = Depends(get_db)):
+    # Validar que el módulo exista
+    modulo = db.query(Module).filter(Module.id == modulo_id).first()
+    if not modulo:
+        raise HTTPException(status_code=404, detail="El módulo especificado no existe")
+    
+    ejercicios = db.query(Ejercicio).filter(Ejercicio.modulo_id == modulo_id).all()
+    return ejercicios
+
+# Endpoint del sandbox docker
 
 @router.post("/ejecutar-python")
 def ejecutar_codigo_python(payload: EjecucionRequest): 
