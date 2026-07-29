@@ -4,6 +4,7 @@ from routers import auth
 from routers import courses
 from routers import exercises
 from routers import modules
+from routers import questions
 from core.database import engine, Base
 from models.user import User
 from models.course import Course
@@ -20,6 +21,9 @@ app.include_router(auth.router)
 app.include_router(courses.router)
 app.include_router(exercises.router)
 app.include_router(modules.router)
+app.include_router(questions.router)
+
+# Configuración CORS
 
 app.add_middleware(
     CORSMiddleware,
