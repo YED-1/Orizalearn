@@ -32,6 +32,12 @@ postgres_data/
 .DS_Store
 Thumbs.db
 
+# Nubesota
+
+
+# archivos
+crear_tablas.py
+
 # Caché
 __pycache__
 

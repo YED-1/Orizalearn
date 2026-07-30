@@ -5,14 +5,8 @@ from routers import courses
 from routers import exercises
 from routers import modules
 from routers import questions
-from core.database import engine, Base
-from models.user import User
-from models.course import Course
 
-
-
-# Crea las tablas en la base de datos (si no existen)
-Base.metadata.create_all(bind=engine)
+# Se quitó el base metadata para que ya se no se creen nuevas tablas en local, ya migré a supabase
 
 app = FastAPI(title="Oriza LMS API", version='0.1.0') 
 
