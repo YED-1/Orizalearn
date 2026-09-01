@@ -37,6 +37,7 @@ Thumbs.db
 
 # archivos
 crear_tablas.py
+importar_curso.py
 
 # Caché
 __pycache__

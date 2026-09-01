@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Float, ForeignKey, DateTime
 from sqlalchemy.sql import func
-from api.core.database import Base
+from core.database import Base
 
 class Evaluacion(Base):
     __tablename__ = "evaluaciones"
