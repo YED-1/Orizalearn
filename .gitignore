@@ -32,6 +32,19 @@ postgres_data/
 .DS_Store
 Thumbs.db
 
+# Python - api/
+api/venv/
+api/.venv/
+api/__pycache__/
+api/**/__pycache__/
+*.pyc
+
+# Node - frontOri/
+frontOri/node_modules/
+frontOri/dist/
+frontOri/build/
+frontOri/.next/
+
 # Nubesota
 
 
@@ -44,3 +57,4 @@ __pycache__
 
 #Personal
 recordatorios.md
+.ignore
