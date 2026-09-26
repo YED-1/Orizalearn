@@ -58,3 +58,5 @@ __pycache__
 #Personal
 recordatorios.md
 .ignore
+skills-lock.json
+settings.local.json
