@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Logo from "../components/logo";
 
 interface AuthLayoutProps {
@@ -11,9 +12,9 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       {/* Panel Izquierdo - Branding (Oculto en móviles, visible desde pantallas medianas) */}
       <div className="hidden md:flex md:w-1/2 bg-oriza-darkest flex-col justify-center items-center relative overflow-hidden">
         {/* Aquí irán los íconos tecnológicos flotantes después */}
-        <div className="z-10">
+        <Link to="/" className="z-10" aria-label="Volver al inicio">
           <Logo size="lg" />
-        </div>
+        </Link>
 
         {/* Un pequeño resplandor de fondo para darle profundidad al azul */}
         <div className="absolute w-96 h-96 bg-oriza-header rounded-full blur-3xl opacity-50 -top-10 -left-10"></div>

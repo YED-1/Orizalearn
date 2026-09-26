@@ -5,11 +5,15 @@ import SignForm from "./components/signform";
 import DashboardLayout from "./layouts/dashboardlayout";
 import DashboardHome from "./components/dashboard/dasboardhome";
 import MisCursos from "./components/dashboard/miscursos";
+import LandingPage from "./features/landing/landingpage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Página pública de inicio */}
+        <Route path="/" element={<LandingPage />} />
+
         {/* Rutas de Autenticación */}
         <Route
           path="/login"
@@ -49,7 +53,7 @@ function App() {
         />
 
         {/* Redirección por defecto */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
