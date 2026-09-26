@@ -1,6 +1,7 @@
 # Script para autenticar al usuario registrado, agregando un algoritmo de hashing
 
 from passlib.context import CryptContext
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from models.user import User 
 from schemas.user import UserCreate 
@@ -35,9 +36,13 @@ def create_user(db: Session, user: UserCreate):
         
     )
     
-    # Se guardamn los cambios en la base de datos
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
+    # Se guardan los cambios en la base de datos; si falla, se deshace la transacción
+    try:
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+    except SQLAlchemyError:
+        db.rollback()
+        raise
     
     return db_user

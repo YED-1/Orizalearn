@@ -1,8 +1,17 @@
-import { useState } from "react";
-import { Mail, Lock, ArrowRight, User, Calendar } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Mail, Lock, ArrowRight, User, Calendar, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+
+// Tiempo máximo de espera de la respuesta del servidor
+const TIEMPO_LIMITE_MS = 20000;
+
+// Un símbolo es cualquier carácter que no sea letra, número ni espacio (igual que en schemas/user.py)
+const tieneSimbolo = (texto: string) => /[^\p{L}\p{N}\s]/u.test(texto);
 
 export default function SignForm() {
+  const navigate = useNavigate();
+  const alertaRef = useRef<HTMLDivElement>(null);
+  const [enviando, setEnviando] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
@@ -13,12 +22,32 @@ export default function SignForm() {
   const [mensajeError, setMensajeError] = useState("");
   const [mensajeExito, setMensajeExito] = useState("");
 
+  // Lleva la alerta a la vista: el botón queda al final del formulario y el mensaje arriba
+  useEffect(() => {
+    if (mensajeError || mensajeExito) {
+      alertaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [mensajeError, mensajeExito]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (enviando) return;
     setMensajeError("");
     setMensajeExito("");
 
-    // Validar que las contraseñas coincidan antes de enviar
+    // Validar la contraseña y que ambas coincidan antes de enviar
+    if (password.length < 12) {
+      setMensajeError("La contraseña debe tener al menos 12 caracteres.");
+      return;
+    }
+
+    if (!tieneSimbolo(password)) {
+      setMensajeError(
+        "La contraseña debe incluir al menos un símbolo (por ejemplo: ! @ # $ % - _).",
+      );
+      return;
+    }
+
     if (password !== confirmpassword) {
       setMensajeError("Las contraseñas no coinciden.");
       return;
@@ -34,25 +63,40 @@ export default function SignForm() {
       genero: genero,
     };
 
+    setEnviando(true);
+    const controlador = new AbortController();
+    const temporizador = setTimeout(() => controlador.abort(), TIEMPO_LIMITE_MS);
+
     try {
       const response = await fetch("http://127.0.0.1:8000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controlador.signal,
       });
 
-      const data = await response.json();
+      // Un error del servidor puede no venir en JSON
+      const data = await response.json().catch(() => ({}));
 
       if (response.ok) {
-        setMensajeExito("¡Cuenta creada correctamente!");
-        // Aquí podrías redirigir al login si lo deseas: navigate("/login") "COMENTARIO DE LA IA"
+        setMensajeExito("¡Cuenta creada correctamente! Te llevamos a iniciar sesión...");
+        setTimeout(() => navigate("/login"), 2000);
       } else {
-        setMensajeError(data.detail || "Error al registrar la cuenta.");
+        setMensajeError(
+          typeof data.detail === "string"
+            ? data.detail
+            : "Error al registrar la cuenta.",
+        );
       }
-    } catch {
+    } catch (error) {
       setMensajeError(
-        "No se pudo conectar con el servidor. Asegúrate de que FastAPI esté corriendo.",
+        error instanceof DOMException && error.name === "AbortError"
+          ? "El servidor tardó demasiado en responder. Inténtalo de nuevo."
+          : "No se pudo conectar con el servidor. Asegúrate de que FastAPI esté corriendo.",
       );
+    } finally {
+      clearTimeout(temporizador);
+      setEnviando(false);
     }
   };
 
@@ -67,19 +111,21 @@ export default function SignForm() {
         </p>
       </div>
 
-      {/* Alerta visual de Error */}
-      {mensajeError && (
-        <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm text-center">
-          {mensajeError}
-        </div>
-      )}
+      <div ref={alertaRef} aria-live="polite">
+        {/* Alerta visual de Error */}
+        {mensajeError && (
+          <div className="mb-6 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm text-center">
+            {mensajeError}
+          </div>
+        )}
 
-      {/* Alerta visual de Éxito */}
-      {mensajeExito && (
-        <div className="mb-6 p-3 bg-oriza-menta-suave border border-oriza-menta/40 text-oriza-menta-fuerte rounded-lg text-sm text-center">
-          {mensajeExito}
-        </div>
-      )}
+        {/* Alerta visual de Éxito */}
+        {mensajeExito && (
+          <div className="mb-6 p-3 bg-oriza-menta-suave border border-oriza-menta/40 text-oriza-menta-fuerte rounded-lg text-sm text-center">
+            {mensajeExito}
+          </div>
+        )}
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Grid para poner Nombre y Apellido en la misma fila */}
@@ -223,6 +269,9 @@ export default function SignForm() {
               placeholder="••••••••"
             />
           </div>
+          <p className="mt-2 text-xs text-oriza-tinta/60">
+            Mínimo 12 caracteres e incluir al menos un símbolo (! @ # $ % - _).
+          </p>
         </div>
 
         {/* Campo de Confirmar Contraseña */}
@@ -252,10 +301,20 @@ export default function SignForm() {
         {/* Botón de Submit */}
         <button
           type="submit"
-          className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-full text-base font-bold text-white bg-oriza-coral-fuerte hover:bg-oriza-coral-oscuro focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-oriza-coral transition-all"
+          disabled={enviando || Boolean(mensajeExito)}
+          className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-full text-base font-bold text-white bg-oriza-coral-fuerte hover:bg-oriza-coral-oscuro focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-oriza-coral transition-all disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          Crear cuenta
-          <ArrowRight className="h-4 w-4" />
+          {enviando ? (
+            <>
+              Creando cuenta...
+              <Loader2 className="h-4 w-4 animate-spin" />
+            </>
+          ) : (
+            <>
+              Crear cuenta
+              <ArrowRight className="h-4 w-4" />
+            </>
+          )}
         </button>
       </form>
 

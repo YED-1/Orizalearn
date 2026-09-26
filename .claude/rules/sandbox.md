@@ -12,4 +12,4 @@ El endpoint `POST /ejercicios/ejecutar-python` ejecuta código arbitrario de est
 - **Nunca ejecutes código del estudiante en el proceso de la API** (`exec`, `eval`, `subprocess`) ni montes volúmenes del host en el contenedor desechable.
 - **Respuesta siempre en JSON con `salida` y `errores`:** los fallos del código del estudiante (`docker.errors.ContainerError`) se devuelven como `{"salida": "", "errores": <stderr>}` con status 200, no como excepción.
 - **Errores de sistema** (`ImageNotFound`, Docker caído, etc.) se capturan y devuelven `HTTPException(500)` con mensaje amigable; la API nunca debe caerse por un fallo del sandbox.
-- Ten en cuenta que `docker.from_env()` se ejecuta al importar el módulo: si lo modificas, prefiere inicializarlo de forma perezosa para que la API arranque aunque Docker no esté disponible.
+- El cliente de Docker se obtiene con `obtener_cliente_docker()` (perezoso y cacheado). No vuelvas a llamar a `docker.from_env()` a nivel de módulo: la API debe arrancar aunque Docker no esté disponible.

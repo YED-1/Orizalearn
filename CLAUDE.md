@@ -18,7 +18,7 @@ npm run build     # tsc -b && vite build  (sirve también como type-check)
 npm run lint      # eslint .
 ```
 
-No hay framework de tests configurado (ni en el frontend ni en el backend).
+El frontend no tiene framework de tests.
 
 ### Backend (`api/`, FastAPI + SQLAlchemy 2)
 
@@ -26,7 +26,13 @@ No hay framework de tests configurado (ni en el frontend ni en el backend).
 cd api
 pip install -r requirements.txt          # ojo: el archivo está codificado en UTF-16
 uvicorn main:app --reload --port 8000    # docs interactivas en /docs
+
+pip install -r requirements-dev.txt      # pytest (solo desarrollo)
+python -m pytest                         # todas las pruebas (api/tests/)
+python -m pytest tests/test_registro.py::test_correo_duplicado_devuelve_400   # una sola
 ```
+
+Las pruebas (`api/tests/`) sustituyen `get_db` por una SQLite en memoria (`conftest.py`) y fijan un `DATABASE_URL` ficticio: nunca tocan Supabase. Si un modelo nuevo necesita tablas en las pruebas, créalas en la fixture `db`.
 
 Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_URL` (Supabase) en el `.env` de la raíz; `core/database.py` lo carga con `python-dotenv`.
 
@@ -37,7 +43,7 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 
 ### Docker
 
-`docker compose up --build` levanta `db` (Postgres 15 local en el puerto 5433) y `api`. El frontend no está en el compose. Nota: el compose inyecta `POSTGRES_URL`, pero el código solo lee `DATABASE_URL`, así que la API usa Supabase aunque corra en Docker.
+`docker compose up --build` levanta solo `api` (la BD es Supabase vía `DATABASE_URL`; no hay Postgres local). El frontend no está en el compose. `env_file` se lee al **crear** el contenedor: tras editar `.env` usa `docker compose up -d --force-recreate`. El contenedor y el uvicorn local comparten el puerto 8000: no los corras a la vez.
 
 ## Arquitectura (lo que no se ve en un solo archivo)
 
@@ -48,7 +54,8 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 - Modelos: todo el dominio está en `models/course.py` (`Course` → `Module` → `Ejercicio` / `Pregunta` → `Opcion`, con cascada). Tablas con nombres en español: `cursos`, `modulos`, `ejercicios`, `preguntas`, `opciones`; más `users` y `evaluaciones`. `Module.tipo_modulo` (`teoria` | `practica` | `examen`) indica al frontend qué renderizar.
 - Schemas duplicados: `schemas/course.py` define versiones anidadas (Course → Modules → Ejercicios/Preguntas) usadas por `GET /cursos/`; `schemas/module.py`, `exercise.py` y `question.py` definen versiones planas usadas por los routers de creación. Al cambiar un campo del modelo, actualiza ambos.
 - Endpoints existentes: `/auth/register`, `/auth/login`, `/cursos/`, `/cursos/crear`, `/modulos/crear`, `/modulos/curso/{curso_id}`, `/ejercicios/crear`, `/ejercicios/modulo/{modulo_id}`, `/ejercicios/ejecutar-python` (sandbox Docker), `/preguntas/crear`.
-- Sandbox: `routers/exercises.py` ejecuta `docker.from_env()` **al importar el módulo**, así que la API no arranca si Docker no está disponible.
+- Sandbox: `routers/exercises.py` crea el cliente con `obtener_cliente_docker()` en el primer uso; si Docker no está disponible, la API arranca igual y el endpoint responde 500 con mensaje amigable.
+- Errores de validación: `main.py` convierte los 422 de FastAPI en `{"detail": "<texto en español>"}` (`traducir_error_validacion`), porque el frontend muestra `data.detail` tal cual. Los mensajes de validadores propios (`ValueError`) se muestran sin cambios.
 
 ### Frontend
 
@@ -60,7 +67,6 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 ## Estado real vs. documentación (verificar antes de asumir)
 
 - **JWT no está implementado**: `/auth/login` devuelve solo `{mensaje, nombre}`; `services/auth_service.py` únicamente hace hash/verificación con bcrypt.
-- **La contraseña de 12 caracteres no se valida** todavía ni en `signform.tsx` ni en `schemas/user.py` (solo se valida que ambas contraseñas coincidan).
 - **`routers/evaluaciones.py` (migración CSV) está roto y no registrado** en `main.py`: importa `from models import Modulo` (no existe; el modelo es `Module`) y usa campos (`numero`, `teoria`, `nivel_bloom`, ...) que no existen en los modelos.
 - **`features/evaluations/evaluacionestudiante.tsx` no está enrutado** y llama a endpoints inexistentes (`/courses/1`, `/courses/1/modules`, `/modules/{id}/questions`, `POST /evaluaciones/`) esperando campos (`nombre`, `abreviatura`) que el backend no devuelve.
 - `components/dashboard/detallecurso.tsx` está vacío; `MisCursos` es solo un estado vacío estático.

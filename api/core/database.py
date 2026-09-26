@@ -8,8 +8,14 @@ load_dotenv()
 # Traemos la URL directa de Supabase
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Creamos el motor conectándose a la nube
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+if not SQLALCHEMY_DATABASE_URL:
+    raise RuntimeError(
+        "Falta DATABASE_URL en el .env. Si usas Docker, recrea el contenedor tras editar el .env "
+        "(docker compose up -d --force-recreate)."
+    )
+
+# Creamos el motor conectándose a la nube; pool_pre_ping descarta conexiones cerradas por el pooler de Supabase
+engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_pre_ping=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()

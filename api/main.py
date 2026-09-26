@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from routers import auth
 from routers import courses
 from routers import exercises
@@ -26,6 +28,40 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Los errores de validación se devuelven como texto en "detail" porque el frontend lo muestra directamente
+@app.exception_handler(RequestValidationError)
+async def manejar_error_validacion(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": traducir_error_validacion(exc.errors())},
+    )
+
+def traducir_error_validacion(errores) -> str:
+    if not errores:
+        return "Los datos enviados no son válidos."
+    error = errores[0]
+    tipo = error.get("type", "")
+    texto = str(error.get("msg", ""))
+    contexto = error.get("ctx") or {}
+    campo = next((str(p) for p in reversed(error.get("loc", ())) if isinstance(p, str) and p != "body"), "")
+
+    if tipo == "value_error":
+        if texto.startswith("value is not a valid email address"):
+            return "El correo electrónico no es válido."
+        # Mensajes de nuestros propios validadores, ya en español
+        return texto.removeprefix("Value error, ")
+    if tipo == "missing":
+        return f"Falta el campo '{campo}'."
+    if tipo == "string_too_short":
+        return f"El campo '{campo}' debe tener al menos {contexto.get('min_length')} caracteres."
+    if tipo in ("string_too_long", "too_long"):
+        return f"El campo '{campo}' no puede superar los {contexto.get('max_length')} caracteres."
+    if tipo == "literal_error":
+        return f"El valor del campo '{campo}' no es una opción válida."
+    if tipo.startswith("date"):
+        return f"La fecha del campo '{campo}' no es válida."
+    return f"El campo '{campo}' no es válido." if campo else "Los datos enviados no son válidos."
 
 @app.get("/")
 def read_root():

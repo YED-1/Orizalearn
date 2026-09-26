@@ -9,8 +9,18 @@ from schemas.exercise import EjercicioCreate, EjercicioResponse
 
 
 router = APIRouter(prefix="/ejercicios", tags=["Ejercicios"])
-# Nos conectamos al socket de Docker que mapeamos en el compose
-client = docker.from_env()
+# El cliente de Docker se crea en el primer uso para que la API arranque aunque Docker no esté disponible
+_cliente_docker = None
+
+def obtener_cliente_docker():
+    global _cliente_docker
+    if _cliente_docker is None:
+        try:
+            # Nos conectamos al socket de Docker que mapeamos en el compose
+            _cliente_docker = docker.from_env()
+        except docker.errors.DockerException:
+            raise HTTPException(status_code=500, detail="El entorno de ejecución no está disponible en este momento.")
+    return _cliente_docker
 
 class EjecucionRequest(BaseModel):
     codigo: str
@@ -44,7 +54,8 @@ def obtener_ejercicios_por_modulo(modulo_id: int, db: Session = Depends(get_db))
 # Endpoint del sandbox docker
 
 @router.post("/ejecutar-python")
-def ejecutar_codigo_python(payload: EjecucionRequest): 
+def ejecutar_codigo_python(payload: EjecucionRequest):
+    client = obtener_cliente_docker()
     try:
         # Se crea y ejecuta el sandbox desechable
         container_output = client.containers.run(

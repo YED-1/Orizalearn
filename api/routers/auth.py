@@ -1,9 +1,13 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 from core.database import get_db
 from schemas.user import UserCreate, UserResponse, UserLogin
 from services import auth_service
 from models.user import User
+
+logger = logging.getLogger(__name__)
 
 # router con un prefijo para que todas sus rutas empiecen con /auth
 router = APIRouter(
@@ -22,7 +26,20 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
         )
     
     # Si el correo está libre, llamamos a al servicio para crear y encriptar
-    nuevo_usuario = auth_service.create_user(db=db, user=user)
+    try:
+        nuevo_usuario = auth_service.create_user(db=db, user=user)
+    except IntegrityError:
+        # Otro registro con el mismo correo se guardó entre la consulta y el commit
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El correo ya está registrado."
+        )
+    except SQLAlchemyError:
+        logger.exception("Error de base de datos al registrar al usuario")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="No se pudo registrar el usuario. Intenta de nuevo más tarde."
+        )
     
     # FastAPI automáticamente filtrará la respuesta usando UserResponse
     return nuevo_usuario
