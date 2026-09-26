@@ -5,7 +5,7 @@ paths:
 
 # Reglas del frontend (React 19 + Vite + TypeScript + Tailwind 3)
 
-- **Estilos solo con Tailwind:** usa las clases utilitarias y la paleta propia `oriza-darkest`, `oriza-header`, `oriza-light` definida en `tailwind.config.js` (agrega colores ahí, no valores hex sueltos). No agregues estilos nuevos a `App.css` (residuo de la plantilla de Vite).
+- **Estilos solo con Tailwind:** usa las clases utilitarias y la paleta propia "Amanecer" definida en `tailwind.config.js`: `oriza-crema` (fondo), `oriza-tinta` (texto), `oriza-coral` (color principal), `oriza-sol`, `oriza-menta` y `oriza-lila` (agrega colores ahí, no valores hex sueltos). Los tonos base y `-suave` son decorativos o de fondo; el texto de color y los botones con texto blanco usan la variante `-fuerte` (contraste ≥ 4.5:1), y sobre `oriza-sol` el texto va en `oriza-tinta`. Estilo visual: fondos claros, tarjetas `rounded-3xl` con fondos pastel planos, botones `rounded-full`, sin fondos oscuros ni brillos difuminados. No agregues estilos nuevos a `App.css` (residuo de la plantilla de Vite).
 - **Iconos:** `lucide-react`. No instales otra librería de iconos ni de componentes UI sin consultarlo.
 - **Componentes:** funciones con `export default function NombreComponente()`, un componente por archivo, nombres de archivo en minúsculas (`loginform.tsx`, `dashboardlayout.tsx`). Tipa las respuestas de la API con `interface` cuyos campos coincidan exactamente con los schemas de `api/schemas/`.
 - **Rutas:** se declaran en `src/App.tsx`. Las páginas del alumno van envueltas en `<DashboardLayout>` y las de acceso en `<AuthLayout>`. Un componente que no esté en `App.tsx` no es accesible.

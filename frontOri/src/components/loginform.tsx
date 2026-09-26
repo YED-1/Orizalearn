@@ -52,12 +52,12 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+    <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-sm border border-oriza-tinta/5">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-oriza-header mb-2">
+        <h2 className="text-3xl font-extrabold text-oriza-tinta mb-2">
           Bienvenido de vuelta
         </h2>
-        <p className="text-gray-500">
+        <p className="text-oriza-tinta/70">
           Ingresa tus credenciales para continuar tu aprendizaje.
         </p>
       </div>
@@ -69,7 +69,7 @@ export default function LoginForm() {
         </div>
       )}
       {mensajeExito && (
-        <div className="mb-6 p-3 bg-green-100 text-green-700 rounded-lg text-sm text-center font-medium">
+        <div className="mb-6 p-3 bg-oriza-menta-suave text-oriza-menta-fuerte rounded-lg text-sm text-center font-medium">
           {mensajeExito}
         </div>
       )}
@@ -78,14 +78,14 @@ export default function LoginForm() {
         {/* Campo de Correo */}
         <div>
           <label
-            className="block text-sm font-medium text-oriza-header mb-2"
+            className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
             htmlFor="email"
           >
             Correo Electrónico
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="h-5 w-5 text-gray-400" />
+              <Mail className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <input
               id="email"
@@ -93,7 +93,7 @@ export default function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
             />
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function LoginForm() {
         <div>
           <div className="flex items-center justify-between mb-2">
             <label
-              className="block text-sm font-medium text-oriza-header"
+              className="block text-sm font-semibold text-oriza-tinta/80"
               htmlFor="password"
             >
               Contraseña
@@ -110,14 +110,14 @@ export default function LoginForm() {
             {/* Opción de recuperar contraseña */}
             <a
               href="#"
-              className="text-sm font-medium text-oriza-darkest hover:text-blue-700 transition-colors"
+              className="text-sm font-bold text-oriza-coral-fuerte hover:text-oriza-coral-oscuro transition-colors"
             >
               ¿Olvidaste tu contraseña?
             </a>
           </div>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Lock className="h-5 w-5 text-gray-400" />
+              <Lock className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <input
               id="password"
@@ -125,7 +125,7 @@ export default function LoginForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
             />
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function LoginForm() {
         {/* Botón de Submit */}
         <button
           type="submit"
-          className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-oriza-darkest hover:bg-oriza-header focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-oriza-darkest transition-all"
+          className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-full text-base font-bold text-white bg-oriza-coral-fuerte hover:bg-oriza-coral-oscuro focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-oriza-coral transition-all"
         >
           Iniciar Sesión
           <ArrowRight className="h-4 w-4" />
@@ -141,11 +141,11 @@ export default function LoginForm() {
       </form>
 
       {/* Enlace al registro */}
-      <div className="mt-8 text-center text-sm text-gray-600">
+      <div className="mt-8 text-center text-sm text-oriza-tinta/70">
         ¿No tienes una cuenta?{" "}
         <Link
           to="/registro"
-          className="font-medium text-oriza-darkest hover:text-blue-700 transition-colors"
+          className="font-bold text-oriza-coral-fuerte hover:text-oriza-coral-oscuro transition-colors"
         >
           Regístrate gratis
         </Link>

@@ -57,12 +57,12 @@ export default function SignForm() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+    <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-sm border border-oriza-tinta/5">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-oriza-header mb-2">
+        <h2 className="text-3xl font-extrabold text-oriza-tinta mb-2">
           Crea tu cuenta
         </h2>
-        <p className="text-gray-500">
+        <p className="text-oriza-tinta/70">
           Únete a OrizaLearn y comienza a escalar hasta la cima
         </p>
       </div>
@@ -76,7 +76,7 @@ export default function SignForm() {
 
       {/* Alerta visual de Éxito */}
       {mensajeExito && (
-        <div className="mb-6 p-3 bg-green-50 border border-green-200 text-green-600 rounded-lg text-sm text-center">
+        <div className="mb-6 p-3 bg-oriza-menta-suave border border-oriza-menta/40 text-oriza-menta-fuerte rounded-lg text-sm text-center">
           {mensajeExito}
         </div>
       )}
@@ -86,14 +86,14 @@ export default function SignForm() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label
-              className="block text-sm font-medium text-oriza-header mb-2"
+              className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
               htmlFor="nombre"
             >
               Nombre(s)
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-gray-400" />
+                <User className="h-5 w-5 text-oriza-tinta/40" />
               </div>
               <input
                 id="nombre"
@@ -101,7 +101,7 @@ export default function SignForm() {
                 required
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+                className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
                 placeholder="Nombre(s)"
               />
             </div>
@@ -109,14 +109,14 @@ export default function SignForm() {
 
           <div>
             <label
-              className="block text-sm font-medium text-oriza-header mb-2"
+              className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
               htmlFor="apellido"
             >
               Apellidos
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-gray-400" />
+                <User className="h-5 w-5 text-oriza-tinta/40" />
               </div>
               <input
                 id="apellido"
@@ -124,7 +124,7 @@ export default function SignForm() {
                 required
                 value={apellido}
                 onChange={(e) => setApellido(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+                className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
                 placeholder="Apellidos"
               />
             </div>
@@ -134,14 +134,14 @@ export default function SignForm() {
         {/* Campo de Correo */}
         <div>
           <label
-            className="block text-sm font-medium text-oriza-header mb-2"
+            className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
             htmlFor="email"
           >
             Correo Electrónico
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="h-5 w-5 text-gray-400" />
+              <Mail className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <input
               id="email"
@@ -149,7 +149,7 @@ export default function SignForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
               placeholder="correo@correo.com"
             />
           </div>
@@ -158,39 +158,39 @@ export default function SignForm() {
         {/* Campo de fecha de nacimiento */}
         <div>
           <label
-            className="block text-sm font-medium text-oriza-header mb-2"
+            className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
             htmlFor="date"
           >
             Fecha de nacimiento
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Calendar className="h-5 w-5 text-gray-400" />
+              <Calendar className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <input
               type="date"
               required
               value={fechaNacimiento}
               onChange={(e) => setFechaNacimiento(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
             />
           </div>
         </div>
 
         {/* Selección de Género */}
         <div>
-          <label className="block text-sm font-medium text-oriza-header mb-2">
+          <label className="block text-sm font-semibold text-oriza-tinta/80 mb-2">
             Género
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5 text-gray-400" />
+              <User className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <select
               required
               value={genero}
               onChange={(e) => setGenero(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none bg-white"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none bg-white"
             >
               <option value="">Seleccione su género</option>
               <option value="Masculino">Masculino</option>
@@ -204,14 +204,14 @@ export default function SignForm() {
         {/* Campo de Contraseña */}
         <div>
           <label
-            className="block text-sm font-medium text-oriza-header mb-2"
+            className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
             htmlFor="password"
           >
             Contraseña
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Lock className="h-5 w-5 text-gray-400" />
+              <Lock className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <input
               id="password"
@@ -219,7 +219,7 @@ export default function SignForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
               placeholder="••••••••"
             />
           </div>
@@ -228,14 +228,14 @@ export default function SignForm() {
         {/* Campo de Confirmar Contraseña */}
         <div>
           <label
-            className="block text-sm font-medium text-oriza-header mb-2"
+            className="block text-sm font-semibold text-oriza-tinta/80 mb-2"
             htmlFor="confirmpassword"
           >
             Confirmar Contraseña
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Lock className="h-5 w-5 text-gray-400" />
+              <Lock className="h-5 w-5 text-oriza-tinta/40" />
             </div>
             <input
               id="confirmpassword"
@@ -243,7 +243,7 @@ export default function SignForm() {
               required
               value={confirmpassword}
               onChange={(e) => setConfpassword(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oriza-darkest focus:border-oriza-darkest sm:text-sm transition-colors outline-none"
+              className="block w-full pl-10 pr-3 py-2.5 border border-oriza-tinta/15 rounded-xl focus:ring-2 focus:ring-oriza-coral/40 focus:border-oriza-coral sm:text-sm transition-colors outline-none"
               placeholder="••••••••"
             />
           </div>
@@ -252,7 +252,7 @@ export default function SignForm() {
         {/* Botón de Submit */}
         <button
           type="submit"
-          className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-oriza-darkest hover:bg-oriza-header focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-oriza-darkest transition-all"
+          className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-full text-base font-bold text-white bg-oriza-coral-fuerte hover:bg-oriza-coral-oscuro focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-oriza-coral transition-all"
         >
           Crear cuenta
           <ArrowRight className="h-4 w-4" />
@@ -260,11 +260,11 @@ export default function SignForm() {
       </form>
 
       {/* Enlace al login */}
-      <div className="mt-8 text-center text-sm text-gray-600">
+      <div className="mt-8 text-center text-sm text-oriza-tinta/70">
         ¿Ya tienes una cuenta?{" "}
         <Link
           to="/login"
-          className="font-medium text-oriza-darkest hover:text-blue-700 transition-colors"
+          className="font-bold text-oriza-coral-fuerte hover:text-oriza-coral-oscuro transition-colors"
         >
           Inicia sesión
         </Link>

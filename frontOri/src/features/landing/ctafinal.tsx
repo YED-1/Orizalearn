@@ -3,36 +3,42 @@ import { ArrowRight } from "lucide-react";
 
 export default function CtaFinal() {
   return (
-    <section className="relative overflow-hidden bg-oriza-darkest py-20 sm:py-28">
-      <div
-        className="absolute w-[36rem] h-[36rem] bg-oriza-acento rounded-full blur-3xl opacity-20 left-1/2 -translate-x-1/2 -top-72"
-        aria-hidden="true"
-      ></div>
+    <section className="bg-oriza-crema px-4 sm:px-6 lg:px-8 pb-20 sm:pb-24">
+      <div className="relative overflow-hidden max-w-6xl mx-auto rounded-[2rem] bg-oriza-coral-fuerte px-6 py-16 sm:py-20">
+        {/* Sol decorativo */}
+        <div
+          className="absolute w-40 h-40 sm:w-56 sm:h-56 rounded-full bg-oriza-sol -top-16 -right-12 sm:-top-20 sm:-right-16"
+          aria-hidden="true"
+        ></div>
 
-      {/* Silueta de montaña de fondo */}
-      <svg
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[48rem] max-w-none h-auto opacity-[0.06]"
-        viewBox="0 0 24 12"
-        aria-hidden="true"
-      >
-        <path className="fill-white" d="M12 0L0 12h24L12 0z" />
-      </svg>
-
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-          La cima es para todos
-        </h2>
-        <p className="mt-5 text-lg text-slate-300">
-          Crea tu cuenta gratuita y da hoy tu primer paso. El camino es tuyo;
-          nosotros te acompañamos.
-        </p>
-        <Link
-          to="/registro"
-          className="mt-10 inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-oriza-acento text-white text-lg font-semibold shadow-lg shadow-oriza-acento/30 hover:bg-blue-600 transition-colors"
+        {/* Silueta de montaña de fondo */}
+        <svg
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[48rem] max-w-none h-auto"
+          viewBox="0 0 24 12"
+          aria-hidden="true"
         >
-          Crear mi cuenta gratis
-          <ArrowRight className="w-5 h-5" />
-        </Link>
+          <path className="fill-white/10" d="M12 0L0 12h24L12 0z" />
+        </svg>
+
+        <div className="relative max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            La cima es para todos
+          </h2>
+          <p className="mt-5 text-lg text-white/90">
+            Crea tu cuenta gratuita y da hoy tu primer paso. El camino es tuyo;
+            nosotros te acompañamos.
+          </p>
+          <Link
+            to="/registro"
+            className="mt-10 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-oriza-coral-fuerte text-lg font-extrabold hover:bg-oriza-crema transition-colors"
+          >
+            Crear mi cuenta gratis
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+          <p className="mt-5 text-sm font-semibold text-white/90">
+            Sin trucos: gratis hoy y siempre.
+          </p>
+        </div>
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ export default function NavbarLanding() {
   const cerrarMenu = () => setMenuAbierto(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-oriza-darkest/80 backdrop-blur-md border-b border-white/10">
+    <header className="fixed inset-x-0 top-0 z-50 bg-oriza-crema/85 backdrop-blur-md border-b border-oriza-tinta/5">
       <nav className="max-w-7xl mx-auto h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <a href="#inicio" onClick={cerrarMenu} aria-label="OrizaLearn, ir al inicio">
           <Logo size="sm" direccion="horizontal" />
@@ -27,7 +27,7 @@ export default function NavbarLanding() {
             <a
               key={enlace.destino}
               href={enlace.destino}
-              className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              className="text-sm font-semibold text-oriza-tinta/70 hover:text-oriza-tinta transition-colors"
             >
               {enlace.etiqueta}
             </a>
@@ -37,13 +37,13 @@ export default function NavbarLanding() {
         <div className="hidden md:flex items-center gap-3">
           <Link
             to="/login"
-            className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white transition-colors"
+            className="px-4 py-2 text-sm font-semibold text-oriza-tinta/80 hover:text-oriza-tinta transition-colors"
           >
             Iniciar sesión
           </Link>
           <Link
             to="/registro"
-            className="px-4 py-2 text-sm font-semibold text-white bg-oriza-acento rounded-lg shadow-lg shadow-oriza-acento/30 hover:bg-blue-600 transition-colors"
+            className="px-5 py-2 text-sm font-bold text-white bg-oriza-coral-fuerte rounded-full hover:bg-oriza-coral-oscuro transition-colors"
           >
             Comenzar gratis
           </Link>
@@ -55,7 +55,7 @@ export default function NavbarLanding() {
           onClick={() => setMenuAbierto(!menuAbierto)}
           aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={menuAbierto}
-          className="md:hidden p-2 -mr-2 text-slate-200 hover:text-white rounded-lg"
+          className="md:hidden p-2 -mr-2 text-oriza-tinta rounded-lg hover:bg-oriza-tinta/5"
         >
           {menuAbierto ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -63,14 +63,14 @@ export default function NavbarLanding() {
 
       {/* Menú desplegable en móvil */}
       {menuAbierto && (
-        <div className="md:hidden border-t border-white/10 bg-oriza-darkest px-4 pb-6 pt-2">
+        <div className="md:hidden border-t border-oriza-tinta/5 bg-oriza-crema px-4 pb-6 pt-2">
           <div className="flex flex-col">
             {enlaces.map((enlace) => (
               <a
                 key={enlace.destino}
                 href={enlace.destino}
                 onClick={cerrarMenu}
-                className="py-3 text-base font-medium text-slate-300 hover:text-white border-b border-white/5"
+                className="py-3 text-base font-semibold text-oriza-tinta/80 hover:text-oriza-tinta border-b border-oriza-tinta/5"
               >
                 {enlace.etiqueta}
               </a>
@@ -79,13 +79,13 @@ export default function NavbarLanding() {
           <div className="mt-6 flex flex-col gap-3">
             <Link
               to="/login"
-              className="w-full text-center px-4 py-3 text-sm font-medium text-white border border-white/20 rounded-lg hover:bg-white/5 transition-colors"
+              className="w-full text-center px-4 py-3 text-sm font-semibold text-oriza-tinta bg-white border border-oriza-tinta/15 rounded-full hover:border-oriza-tinta/30 transition-colors"
             >
               Iniciar sesión
             </Link>
             <Link
               to="/registro"
-              className="w-full text-center px-4 py-3 text-sm font-semibold text-white bg-oriza-acento rounded-lg hover:bg-blue-600 transition-colors"
+              className="w-full text-center px-4 py-3 text-sm font-bold text-white bg-oriza-coral-fuerte rounded-full hover:bg-oriza-coral-oscuro transition-colors"
             >
               Comenzar gratis
             </Link>

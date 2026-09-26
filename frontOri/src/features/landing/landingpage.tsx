@@ -9,7 +9,7 @@ import FooterLanding from "./footerlanding";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-oriza-light font-sans antialiased">
+    <div className="min-h-screen bg-oriza-crema text-oriza-tinta font-sans antialiased">
       <NavbarLanding />
       <main>
         <HeroLanding />

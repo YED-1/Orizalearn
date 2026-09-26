@@ -129,34 +129,34 @@ export default function EvaluacionEstudiante() {
   return (
     <div className="flex min-h-screen bg-white">
       {/*BARRA LATERAL*/}
-      <aside className="w-[30%] bg-gray-300 p-5 border-r-2 border-gray-400">
+      <aside className="w-[30%] bg-oriza-crema p-5 border-r border-oriza-tinta/10">
         <div className="flex items-center gap-4 mb-8 min-h-[50px]">
           {cursoActivo ? (
             <>
-              <div className="bg-yellow-400 p-2.5 font-bold text-xl rounded shadow-sm text-gray-900">
+              <div className="bg-oriza-sol p-2.5 font-extrabold text-xl rounded-xl text-oriza-tinta">
                 {cursoActivo.abreviatura}
               </div>
-              <h3 className="text-blue-900 m-0 text-base font-bold">
+              <h3 className="text-oriza-tinta m-0 text-base font-extrabold">
                 {cursoActivo.nombre}
               </h3>
             </>
           ) : (
-            <p className="text-gray-500 italic text-sm">Cargando curso...</p>
+            <p className="text-oriza-tinta/70 italic text-sm">Cargando curso...</p>
           )}
         </div>
 
         <div className="flex flex-col gap-4">
           {modulos.length === 0 ? (
-            <p className="text-gray-500 text-sm">No hay módulos disponibles.</p>
+            <p className="text-oriza-tinta/70 text-sm">No hay módulos disponibles.</p>
           ) : (
             modulos.map((mod) => (
               <button
                 key={mod.id}
                 onClick={() => setModuloActivo(mod.id)}
-                className={`h-12 rounded-lg cursor-pointer w-full transition-all duration-200 px-4 text-left font-medium truncate ${
+                className={`h-12 rounded-2xl cursor-pointer w-full transition-all duration-200 px-4 text-left font-medium truncate ${
                   moduloActivo === mod.id
-                    ? "bg-white border-2 border-blue-900 shadow-md text-blue-900"
-                    : "bg-white border-2 border-transparent hover:bg-gray-50 text-gray-700"
+                    ? "bg-oriza-coral-suave border-2 border-oriza-coral text-oriza-coral-fuerte font-bold"
+                    : "bg-white border-2 border-transparent hover:border-oriza-tinta/10 text-oriza-tinta/80"
                 }`}
               >
                 {mod.nombre}
@@ -168,29 +168,29 @@ export default function EvaluacionEstudiante() {
 
       {/*CONTENIDO PRINCIPAL*/}
       <main className="w-[70%] p-10 flex flex-col">
-        <h2 className="text-blue-900 mt-0 mb-5 text-2xl font-bold h-[32px]">
+        <h2 className="text-oriza-tinta mt-0 mb-5 text-2xl font-extrabold h-[32px]">
           {moduloActivo && modulos.length > 0
             ? `Evaluación: ${modulos.find((m) => m.id === moduloActivo)?.nombre}`
             : "Mis Evaluaciones"}
         </h2>
 
-        <div className="bg-gray-300 rounded-xl p-8 grow overflow-y-auto flex flex-col">
+        <div className="bg-oriza-crema rounded-3xl p-8 grow overflow-y-auto flex flex-col">
           {!moduloActivo ? (
             <div className="flex-grow flex items-center justify-center">
-              <p className="text-gray-600 text-lg text-center max-w-md">
+              <p className="text-oriza-tinta/70 text-lg text-center max-w-md">
                 Selecciona un módulo en el panel izquierdo para comenzar tu
                 evaluación.
               </p>
             </div>
           ) : cargandoPreguntas ? (
             <div className="flex-grow flex items-center justify-center">
-              <p className="text-gray-600 text-lg text-center animate-pulse">
+              <p className="text-oriza-tinta/70 text-lg text-center animate-pulse">
                 Cargando preguntas de la evaluación...
               </p>
             </div>
           ) : preguntas.length === 0 ? (
             <div className="flex-grow flex items-center justify-center">
-              <p className="text-gray-600 text-lg text-center">
+              <p className="text-oriza-tinta/70 text-lg text-center">
                 Este módulo aún no tiene preguntas asignadas.
               </p>
             </div>
@@ -202,9 +202,9 @@ export default function EvaluacionEstudiante() {
               {preguntas.map((pregunta, index) => (
                 <div
                   key={pregunta.id}
-                  className="bg-white p-6 rounded-lg shadow-sm border border-gray-200"
+                  className="bg-white p-6 rounded-3xl shadow-sm shadow-oriza-tinta/5"
                 >
-                  <h4 className="text-lg font-bold text-gray-800 mb-4">
+                  <h4 className="text-lg font-extrabold text-oriza-tinta mb-4">
                     {index + 1}. {pregunta.texto}
                   </h4>
 
@@ -212,10 +212,10 @@ export default function EvaluacionEstudiante() {
                     {pregunta.opciones.map((opcion) => (
                       <label
                         key={opcion.id}
-                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                        className={`flex items-center gap-3 p-3 rounded-2xl border-2 cursor-pointer transition-colors ${
                           respuestasSeleccionadas[pregunta.id] === opcion.id
-                            ? "bg-blue-50 border-blue-900"
-                            : "bg-gray-50 border-gray-300 hover:bg-gray-100"
+                            ? "bg-oriza-coral-suave border-oriza-coral"
+                            : "bg-white border-oriza-tinta/10 hover:border-oriza-tinta/20"
                         }`}
                       >
                         <input
@@ -228,9 +228,9 @@ export default function EvaluacionEstudiante() {
                           onChange={() =>
                             manejarSeleccion(pregunta.id, opcion.id)
                           }
-                          className="scale-125 cursor-pointer accent-blue-900"
+                          className="scale-125 cursor-pointer accent-oriza-coral-fuerte"
                         />
-                        <span className="text-gray-700 font-medium">
+                        <span className="text-oriza-tinta font-semibold">
                           {opcion.texto}
                         </span>
                       </label>
@@ -242,7 +242,7 @@ export default function EvaluacionEstudiante() {
               <div className="text-right mt-4 pb-10">
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-blue-900 text-white border-none rounded-lg font-bold cursor-pointer text-base hover:bg-blue-800 transition-colors shadow-md w-full sm:w-auto"
+                  className="px-8 py-3 bg-oriza-coral-fuerte text-white border-none rounded-full font-bold cursor-pointer text-base hover:bg-oriza-coral-oscuro transition-colors w-full sm:w-auto"
                 >
                   Enviar Respuestas
                 </button>

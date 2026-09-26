@@ -55,7 +55,7 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 - Rutas en `src/App.tsx`: `/login`, `/registro`, `/dashboard`, `/dashboard/courses`; cualquier otra redirige a `/login`. Los layouts (`AuthLayout`, `DashboardLayout`) envuelven cada página mediante `children`, no con `<Outlet>`.
 - Llamadas a la API: URLs codificadas en cada componente, mezclando `fetch` y `axios`, y `localhost` con `127.0.0.1`. No hay cliente HTTP centralizado ni variable de entorno para la URL base.
 - Sesión: solo `localStorage.userName` (lo guarda `loginform.tsx`, lo borra el logout de `dashboardlayout.tsx`). No hay rutas protegidas.
-- Estilos: Tailwind con la paleta propia `oriza.darkest` / `oriza.header` / `oriza.light` (`tailwind.config.js`); iconos con `lucide-react`. `App.css` es un residuo de la plantilla de Vite.
+- Estilos: Tailwind con la paleta propia "Amanecer" (`tailwind.config.js`): `oriza-crema` (fondo), `oriza-tinta` (texto), `oriza-coral`, `oriza-sol`, `oriza-menta` y `oriza-lila`, con variantes `-suave` / `-fuerte`. Tipografía Nunito (Google Fonts, cargada en `index.html`). Iconos con `lucide-react`. `App.css` es un residuo de la plantilla de Vite.
 
 ## Estado real vs. documentación (verificar antes de asumir)
 
