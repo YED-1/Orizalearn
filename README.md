@@ -22,6 +22,7 @@ en módulos cortos y precisos pensados para que dediques tu tiempo a practicar.
 </div>
 
 <!-- Captura principal: página de inicio completa (sección hero), guardada en docs/capturas/landing.png -->
+
 ![Página de inicio de OrizaLearn](docs/capturas/landing.png)
 
 ## ¿Por qué OrizaLearn?
@@ -56,17 +57,18 @@ El primer curso disponible es **Python básico**: 8 temas, desde los primeros pa
 ## Galería
 
 <!-- Reemplaza estas rutas por capturas reales guardadas en docs/capturas/ -->
-| Registro | Panel del estudiante |
-| :---: | :---: |
+
+|                       Registro                        |                 Panel del estudiante                 |
+| :---------------------------------------------------: | :--------------------------------------------------: |
 | ![Formulario de registro](docs/capturas/registro.png) | ![Panel del estudiante](docs/capturas/dashboard.png) |
 
 ## Tecnologías
 
-| Capa | Herramientas |
-| --- | --- |
-| **Frontend** | React 19, TypeScript, Vite, Tailwind CSS con la paleta propia *Amanecer*, tipografía Nunito e iconos de Lucide |
-| **Backend** | FastAPI, SQLAlchemy 2, Pydantic y bcrypt para el cifrado de contraseñas |
-| **Datos** | PostgreSQL alojado en Supabase |
+| Capa                | Herramientas                                                                                                                |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Frontend**        | React 19, TypeScript, Vite, Tailwind CSS con la paleta propia _Amanecer_, tipografía Nunito e iconos de Lucide              |
+| **Backend**         | FastAPI, SQLAlchemy 2, Pydantic y bcrypt para el cifrado de contraseñas                                                     |
+| **Datos**           | PostgreSQL alojado en Supabase                                                                                              |
 | **Infraestructura** | Docker para la API y para el entorno aislado donde se ejecuta el código de los estudiantes (sin red y con memoria limitada) |
 
 ## Estado del proyecto
@@ -83,28 +85,6 @@ OrizaLearn está en desarrollo activo. Esto es lo que ya funciona y lo que viene
 - [ ] Calificación automática de ejercicios
 - [ ] Seguimiento del progreso
 - [ ] Verificación de correo electrónico
-
-## Pruébalo en local
-
-Necesitas Python 3, Node.js y una base de datos PostgreSQL (por ejemplo, en Supabase) cuya URL de conexión esté en la variable `DATABASE_URL` de un archivo `.env` en la raíz del proyecto.
-
-**API** (queda en `http://localhost:8000`, con documentación interactiva en `/docs`):
-
-```bash
-cd api
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-```
-
-**Aplicación web** (queda en `http://localhost:5173`):
-
-```bash
-cd frontOri
-npm install
-npm run dev
-```
-
-Para ejecutar código de los ejercicios, Docker debe estar en marcha. La documentación técnica completa está dentro del repositorio.
 
 ## Autor
 
