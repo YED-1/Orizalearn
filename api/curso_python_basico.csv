@@ -1,0 +1,296 @@
+modulo_numero;modulo_titulo;tipo_modulo;teoria;ejemplo_codigo;pregunta_reactivo;opcion_a;opcion_b;opcion_c;opcion_d;respuesta_correcta;ejercicio_instrucciones;ejercicio_codigo_inicial;ejercicio_solucion_esperada;ejercicio_casos_prueba
+1;Introducción a Python;teoria;"Python es un lenguaje de programación de alto nivel, fácil de leer y muy utilizado en ciencia de datos, desarrollo web, automatización y educación. Un programa de Python es una secuencia de instrucciones que el intérprete ejecuta de arriba hacia abajo, una tras otra.
+
+La función print() muestra información en la consola. Puede recibir texto entre comillas (simples o dobles), números o varios valores separados por comas; en ese caso los muestra separados por un espacio. Cada llamada a print() termina con un salto de línea.
+
+Los comentarios empiezan con el símbolo # y el intérprete los ignora: sirven para explicar el código a otras personas (o a ti en el futuro).
+
+Si escribes algo que Python no entiende, por ejemplo si olvidas cerrar unas comillas o un paréntesis, obtendrás un SyntaxError. Leer el mensaje de error con calma es la mejor forma de encontrar el problema.";"# Mi primer programa
+print(""¡Hola, mundo!"")
+print(""Tengo"", 20, ""años"")
+print('Python también acepta comillas simples')";;;;;;;;;;
+2;Práctica: Introducción a Python;practica;Pon en práctica lo aprendido en el tema «Introducción a Python». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Muestra en la consola el mensaje ¡Hola, mundo! usando la función print().;"# Escribe tu código debajo de esta línea
+";¡Hola, mundo!;
+2;Práctica: Introducción a Python;practica;Pon en práctica lo aprendido en el tema «Introducción a Python». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;"Usa una sola llamada a print() con tres valores separados por comas (el texto ""Python"", el texto ""nació en"" y el número 1991 sin comillas) para mostrar: Python nació en 1991";"# Completa la llamada a print()
+print()
+";Python nació en 1991;
+3;Evaluación: Introducción a Python;examen;Responde las siguientes preguntas sobre el tema «Introducción a Python». Cada pregunta tiene una sola respuesta correcta.;;¿Qué función se usa para mostrar información en la consola?;input();print();show();echo();B;;;;
+3;Evaluación: Introducción a Python;examen;Responde las siguientes preguntas sobre el tema «Introducción a Python». Cada pregunta tiene una sola respuesta correcta.;;¿Con qué símbolo empieza un comentario de una línea en Python?;//;--;#;/*;C;;;;
+3;Evaluación: Introducción a Python;examen;Responde las siguientes preguntas sobre el tema «Introducción a Python». Cada pregunta tiene una sola respuesta correcta.;;"¿Qué muestra print(""Hola"", ""mundo"")?";Holamundo;Hola, mundo;"""Hola"" ""mundo""";Hola mundo;D;;;;
+3;Evaluación: Introducción a Python;examen;Responde las siguientes preguntas sobre el tema «Introducción a Python». Cada pregunta tiene una sola respuesta correcta.;;"¿Qué ocurre al ejecutar print(""Hola sin cerrar las comillas?";Python muestra Hola;Python cierra las comillas automáticamente;Se produce un SyntaxError;El programa se ejecuta pero no muestra nada;C;;;;
+3;Evaluación: Introducción a Python;examen;Responde las siguientes preguntas sobre el tema «Introducción a Python». Cada pregunta tiene una sola respuesta correcta.;;¿En qué orden ejecuta Python las instrucciones de un programa sencillo?;De arriba hacia abajo, una tras otra;De abajo hacia arriba;En orden alfabético;Todas al mismo tiempo;A;;;;
+4;Variables y tipos de datos;teoria;"Una variable es un nombre que guarda un valor para usarlo después. Se crea con el operador de asignación =, por ejemplo edad = 25. Los nombres de variables pueden contener letras, números y guiones bajos, no pueden empezar con un número y distinguen mayúsculas de minúsculas (edad y Edad son variables distintas). Por convención se escriben en minúsculas y con guiones bajos: nombre_completo.
+
+Los tipos de datos básicos son:
+- int: números enteros, como 7 o -3.
+- float: números con decimales, como 3.14 o 2.0.
+- str: cadenas de texto entre comillas, como ""Hola"".
+- bool: valores lógicos True o False.
+
+La función type() indica el tipo de un valor. Para convertir entre tipos se usan int(), float(), str() y bool(): int(""42"") devuelve 42 y str(10) devuelve ""10"". Ten en cuenta que int() aplicado a un float descarta la parte decimal: int(3.9) devuelve 3.
+
+Una variable puede cambiar de valor (e incluso de tipo) en cualquier momento; siempre conserva el último valor asignado.";"nombre = ""Ana""
+edad = 25
+altura = 1.68
+estudiante = True
+
+print(nombre, edad, altura, estudiante)
+print(type(edad))      # <class 'int'>
+print(type(altura))    # <class 'float'>
+
+texto = ""42""
+numero = int(texto)
+print(numero + 8)      # 50";;;;;;;;;;
+5;Práctica: Variables y tipos de datos;practica;Pon en práctica lo aprendido en el tema «Variables y tipos de datos». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;"Crea una variable llamada producto con el valor ""Cuaderno"" y otra llamada precio con el valor 35.5. Después muestra ambas con una sola llamada a print(), en ese orden.";"# Crea las variables producto y precio
+
+# Muéstralas con print()
+";Cuaderno 35.5;
+5;Práctica: Variables y tipos de datos;practica;Pon en práctica lo aprendido en el tema «Variables y tipos de datos». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;La variable cantidad_texto contiene un número escrito como texto. Conviértelo a entero con int(), multiplícalo por precio_unitario y muestra el resultado.;"cantidad_texto = ""12""
+precio_unitario = 7
+# Convierte cantidad_texto a entero y muestra cantidad * precio_unitario
+";84;
+6;Evaluación: Variables y tipos de datos;examen;Responde las siguientes preguntas sobre el tema «Variables y tipos de datos». Cada pregunta tiene una sola respuesta correcta.;;¿Cuál es el tipo de dato del valor 3.14?;int;str;float;bool;C;;;;
+6;Evaluación: Variables y tipos de datos;examen;Responde las siguientes preguntas sobre el tema «Variables y tipos de datos». Cada pregunta tiene una sola respuesta correcta.;;¿Cuál de estos nombres de variable NO es válido en Python?;mi_variable;2numero;_total;edad2;B;;;;
+6;Evaluación: Variables y tipos de datos;examen;Responde las siguientes preguntas sobre el tema «Variables y tipos de datos». Cada pregunta tiene una sola respuesta correcta.;;"¿Qué devuelve la expresión int(""42"") + 8?";"""428""";50;428;Un error;B;;;;
+6;Evaluación: Variables y tipos de datos;examen;Responde las siguientes preguntas sobre el tema «Variables y tipos de datos». Cada pregunta tiene una sola respuesta correcta.;;"Después de ejecutar x = 5 y luego x = ""cinco"", ¿qué valor tiene x?";"""cinco""";5;"5 y ""cinco"" al mismo tiempo";Se produce un error;A;;;;
+6;Evaluación: Variables y tipos de datos;examen;Responde las siguientes preguntas sobre el tema «Variables y tipos de datos». Cada pregunta tiene una sola respuesta correcta.;;¿Cuáles son los dos valores posibles del tipo bool?;1 y 0;"""sí"" y ""no""";Verdadero y Falso;True y False;D;;;;
+7;Operadores;teoria;"Los operadores permiten hacer cálculos y comparaciones.
+
+Operadores aritméticos:
+- + suma, - resta, * multiplicación.
+- / división: siempre devuelve un float (10 / 2 es 5.0).
+- // división entera: descarta los decimales (17 // 5 es 3).
+- % módulo o residuo de la división (17 % 5 es 2). Es muy útil para saber si un número es par: n % 2 == 0.
+- ** potencia (2 ** 3 es 8).
+
+Operadores de comparación: == (igual), != (distinto), <, >, <= y >=. Siempre devuelven True o False. No confundas = (asignar) con == (comparar).
+
+Operadores lógicos: and (verdadero si ambas condiciones lo son), or (verdadero si al menos una lo es) y not (invierte el valor).
+
+Precedencia: primero se evalúa **, luego *, /, // y %, y al final + y -. Los paréntesis cambian el orden: 2 + 3 * 4 es 14, pero (2 + 3) * 4 es 20.
+
+Los operadores de asignación compuesta abrevian operaciones frecuentes: total += 5 equivale a total = total + 5.";"a = 17
+b = 5
+print(a / b)     # 3.4
+print(a // b)    # 3
+print(a % b)     # 2
+print(2 ** 3)    # 8
+
+print(a > b and b > 0)   # True
+print(not a > b)         # False
+
+print(2 + 3 * 4)     # 14
+print((2 + 3) * 4)   # 20";;;;;;;;;;
+8;Práctica: Operadores;practica;Pon en práctica lo aprendido en el tema «Operadores». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;"La variable minutos vale 125. Usa // y % para calcular cuántas horas completas y cuántos minutos restantes son, y muestra el resultado con print(horas, ""h"", resto, ""min"").";"minutos = 125
+# Calcula las horas completas y los minutos restantes
+";2 h 5 min;
+8;Práctica: Operadores;practica;Pon en práctica lo aprendido en el tema «Operadores». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Calcula el área de un círculo de radio 3 con la fórmula pi * radio ** 2 (usa pi = 3.1416) y muestra el resultado redondeado a 2 decimales con round(area, 2).;"pi = 3.1416
+radio = 3
+# Calcula el área y muéstrala redondeada a 2 decimales
+";28.27;
+9;Evaluación: Operadores;examen;Responde las siguientes preguntas sobre el tema «Operadores». Cada pregunta tiene una sola respuesta correcta.;;¿Cuál es el resultado de 17 // 5?;3.4;3;2;4;B;;;;
+9;Evaluación: Operadores;examen;Responde las siguientes preguntas sobre el tema «Operadores». Cada pregunta tiene una sola respuesta correcta.;;¿Qué devuelve 10 % 3?;1;3;3.33;0;A;;;;
+9;Evaluación: Operadores;examen;Responde las siguientes preguntas sobre el tema «Operadores». Cada pregunta tiene una sola respuesta correcta.;;¿Cuál es el resultado de 2 + 3 * 4?;20;24;14;9;C;;;;
+9;Evaluación: Operadores;examen;Responde las siguientes preguntas sobre el tema «Operadores». Cada pregunta tiene una sola respuesta correcta.;;¿Qué devuelve la expresión 5 > 3 and 2 > 4?;True;5;Un error;False;D;;;;
+9;Evaluación: Operadores;examen;Responde las siguientes preguntas sobre el tema «Operadores». Cada pregunta tiene una sola respuesta correcta.;;¿Qué operador se usa para elevar un número a una potencia?;^;//;%%;**;D;;;;
+10;Cadenas de texto;teoria;"Las cadenas (tipo str) son secuencias de caracteres escritas entre comillas. Se pueden unir con + (""Hola"" + ""Mundo"" da ""HolaMundo"") y repetir con * (""ja"" * 3 da ""jajaja""). La función len() devuelve cuántos caracteres tiene una cadena, contando los espacios.
+
+Cada carácter tiene una posición llamada índice, que empieza en 0. texto[0] es el primer carácter y los índices negativos cuentan desde el final: texto[-1] es el último.
+
+Las rebanadas (slicing) extraen una parte: texto[inicio:fin] toma desde inicio hasta fin sin incluirlo. Por ejemplo, ""Python""[0:3] es ""Pyt"".
+
+Las cadenas son inmutables: sus métodos devuelven una cadena nueva en lugar de modificar la original. Algunos métodos útiles:
+- upper() y lower(): convierten a mayúsculas o minúsculas.
+- strip(): quita los espacios de los extremos.
+- replace(viejo, nuevo): reemplaza un texto por otro.
+- split(): separa la cadena en una lista de palabras.
+
+Las f-strings permiten insertar valores dentro de un texto: se escribe una f antes de las comillas y cada valor entre llaves, por ejemplo f""Tengo {edad} años"".";"lenguaje = ""Python""
+print(len(lenguaje))       # 6
+print(lenguaje[0])         # P
+print(lenguaje[-1])        # n
+print(lenguaje[0:3])       # Pyt
+print(lenguaje.upper())    # PYTHON
+
+frase = ""  aprender es divertido  ""
+print(frase.strip())       # aprender es divertido
+
+nombre = ""Luis""
+print(f""Hola, {nombre}. Tu nombre tiene {len(nombre)} letras."")";;;;;;;;;;
+11;Práctica: Cadenas de texto;practica;Pon en práctica lo aprendido en el tema «Cadenas de texto». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;La variable nombre tiene espacios sobrantes a los lados. Quítalos con strip(), convierte el texto a mayúsculas con upper() y muestra el resultado.;"nombre = ""  maría lópez  ""
+# Quita los espacios de los extremos y convierte a mayúsculas
+";MARÍA LÓPEZ;
+11;Práctica: Cadenas de texto;practica;Pon en práctica lo aprendido en el tema «Cadenas de texto». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Usa una f-string con índices y len() para mostrar exactamente: Empieza con p, termina con n y tiene 12 letras;"palabra = ""programacion""
+# Muestra la primera letra, la última y la cantidad de letras
+";Empieza con p, termina con n y tiene 12 letras;
+12;Evaluación: Cadenas de texto;examen;Responde las siguientes preguntas sobre el tema «Cadenas de texto». Cada pregunta tiene una sola respuesta correcta.;;"Si texto = ""Python"", ¿qué devuelve texto[0]?";"""y""";"""P""";"""Python""";Un error;B;;;;
+12;Evaluación: Cadenas de texto;examen;Responde las siguientes preguntas sobre el tema «Cadenas de texto». Cada pregunta tiene una sola respuesta correcta.;;"¿Qué devuelve len(""hola mundo"")?";9;2;10;11;C;;;;
+12;Evaluación: Cadenas de texto;examen;Responde las siguientes preguntas sobre el tema «Cadenas de texto». Cada pregunta tiene una sola respuesta correcta.;;"Si s = ""programa"", ¿qué devuelve s[0:3]?";"""pro""";"""prog""";"""rog""";"""ama""";A;;;;
+12;Evaluación: Cadenas de texto;examen;Responde las siguientes preguntas sobre el tema «Cadenas de texto». Cada pregunta tiene una sola respuesta correcta.;;¿Qué método convierte una cadena a mayúsculas?;lower();title_all();mayus();upper();D;;;;
+12;Evaluación: Cadenas de texto;examen;Responde las siguientes preguntas sobre el tema «Cadenas de texto». Cada pregunta tiene una sola respuesta correcta.;;"Si nombre = ""Ana"", ¿qué muestra print(f""Hola, {nombre}"")?";Hola, {nombre};Hola, nombre;Hola, Ana;"f""Hola, Ana""";C;;;;
+13;Condicionales;teoria;"Las estructuras condicionales permiten que un programa tome decisiones.
+
+if evalúa una condición; si es verdadera, ejecuta el bloque de código que le sigue. La línea del if termina con dos puntos (:) y el bloque se escribe con sangría (indentación), normalmente de 4 espacios. En Python la indentación es obligatoria: si falta, se produce un IndentationError.
+
+else define el bloque que se ejecuta cuando la condición es falsa. elif (abreviatura de ""else if"") permite evaluar otras condiciones en orden. Python revisa las condiciones de arriba hacia abajo y ejecuta únicamente el primer bloque cuya condición sea verdadera; si ninguna lo es, ejecuta el else (si existe).
+
+Las condiciones pueden combinarse con and, or y not, por ejemplo: if edad >= 18 and tiene_credencial:";"calificacion = 85
+
+if calificacion >= 90:
+    print(""Excelente"")
+elif calificacion >= 70:
+    print(""Aprobado"")
+else:
+    print(""Necesitas repasar"")
+
+edad = 20
+tiene_credencial = True
+if edad >= 18 and tiene_credencial:
+    print(""Puedes entrar"")";;;;;;;;;;
+14;Práctica: Condicionales;practica;Pon en práctica lo aprendido en el tema «Condicionales». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Usa if/else y el operador % para mostrar par o impar según el valor de la variable numero.;"numero = 7
+# Muestra si el número es par o impar
+";impar;
+14;Práctica: Condicionales;practica;Pon en práctica lo aprendido en el tema «Condicionales». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;"Clasifica la temperatura: muestra ""Frío"" si es menor que 15, ""Templado"" si está entre 15 y 25 (incluidos) y ""Calor"" si es mayor que 25.";"temperatura = 28
+# Clasifica la temperatura con if, elif y else
+";Calor;
+15;Evaluación: Condicionales;examen;Responde las siguientes preguntas sobre el tema «Condicionales». Cada pregunta tiene una sola respuesta correcta.;;¿Qué palabra clave se usa para evaluar otra condición después de un if?;elif;elseif;else if;otherwise;A;;;;
+15;Evaluación: Condicionales;examen;Responde las siguientes preguntas sobre el tema «Condicionales». Cada pregunta tiene una sola respuesta correcta.;;"Si x = 10, ¿qué muestra este código?
+
+if x > 5:
+    print(""Mayor"")
+else:
+    print(""Menor"")";Menor;Mayor;Mayor y Menor;Nada;B;;;;
+15;Evaluación: Condicionales;examen;Responde las siguientes preguntas sobre el tema «Condicionales». Cada pregunta tiene una sola respuesta correcta.;;¿Qué error se produce si el bloque de un if no tiene indentación?;TypeError;NameError;IndentationError;ValueError;C;;;;
+15;Evaluación: Condicionales;examen;Responde las siguientes preguntas sobre el tema «Condicionales». Cada pregunta tiene una sola respuesta correcta.;;"Si n = 0, ¿qué muestra este código?
+
+if n > 0:
+    print(""positivo"")
+elif n < 0:
+    print(""negativo"")
+else:
+    print(""cero"")";positivo;negativo;Nada;cero;D;;;;
+15;Evaluación: Condicionales;examen;Responde las siguientes preguntas sobre el tema «Condicionales». Cada pregunta tiene una sola respuesta correcta.;;¿Cuántos bloques de una estructura if/elif/else se ejecutan como máximo?;Todos los que tengan una condición verdadera;Siempre el bloque else;Dos: el if y el else;Solo uno: el primero cuya condición sea verdadera;D;;;;
+16;Bucles;teoria;"Los bucles repiten un bloque de código.
+
+El bucle for recorre los elementos de una secuencia (una cadena, una lista, un rango...). La función range() genera secuencias de números:
+- range(5) genera 0, 1, 2, 3, 4 (el final no se incluye).
+- range(1, 6) genera 1, 2, 3, 4, 5.
+- range(0, 10, 2) genera 0, 2, 4, 6, 8 (el tercer valor es el paso).
+
+El bucle while repite su bloque mientras la condición sea verdadera. Es importante que algo dentro del bucle cambie la condición; si nunca se vuelve falsa, se produce un bucle infinito.
+
+Dentro de cualquier bucle, break termina el bucle de inmediato y continue salta al inicio de la siguiente iteración.
+
+Un patrón muy común es el acumulador: una variable que empieza en 0 y a la que se le suma un valor en cada vuelta, por ejemplo para calcular totales. Un contador funciona igual, pero suma 1 cada vez.";"for i in range(1, 4):
+    print(""Vuelta"", i)
+
+total = 0
+for numero in range(1, 6):
+    total += numero
+print(""Suma:"", total)   # Suma: 15
+
+contador = 3
+while contador > 0:
+    print(contador)
+    contador -= 1
+print(""¡Despegue!"")";;;;;;;;;;
+17;Práctica: Bucles;practica;Pon en práctica lo aprendido en el tema «Bucles». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Usa un bucle for con range() para mostrar la tabla de multiplicar del número guardado en tabla, del 1 al 5, con el formato 3 x 1 = 3 (una línea por resultado).;"tabla = 3
+# Muestra la tabla de multiplicar del 1 al 5
+";"3 x 1 = 3
+3 x 2 = 6
+3 x 3 = 9
+3 x 4 = 12
+3 x 5 = 15";
+17;Práctica: Bucles;practica;Pon en práctica lo aprendido en el tema «Bucles». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Recorre los números del 1 al 20 y, usando un acumulador, suma solo los números pares. Al final muestra el total.;"total = 0
+# Recorre los números del 1 al 20 y acumula solo los pares
+
+print(total)
+";110;
+18;Evaluación: Bucles;examen;Responde las siguientes preguntas sobre el tema «Bucles». Cada pregunta tiene una sola respuesta correcta.;;¿Qué números genera range(5)?;1, 2, 3, 4, 5;0, 1, 2, 3, 4;0, 1, 2, 3, 4, 5;Solo el 5;B;;;;
+18;Evaluación: Bucles;examen;Responde las siguientes preguntas sobre el tema «Bucles». Cada pregunta tiene una sola respuesta correcta.;;¿Qué instrucción termina un bucle de inmediato?;continue;stop;break;exit;C;;;;
+18;Evaluación: Bucles;examen;Responde las siguientes preguntas sobre el tema «Bucles». Cada pregunta tiene una sola respuesta correcta.;;"¿Qué muestra este código?
+
+total = 0
+for i in range(1, 4):
+    total += i
+print(total)";3;10;4;6;D;;;;
+18;Evaluación: Bucles;examen;Responde las siguientes preguntas sobre el tema «Bucles». Cada pregunta tiene una sola respuesta correcta.;;¿Qué hace la instrucción continue dentro de un bucle?;Salta al inicio de la siguiente iteración;Termina el programa;Sale del bucle;Repite la iteración actual;A;;;;
+18;Evaluación: Bucles;examen;Responde las siguientes preguntas sobre el tema «Bucles». Cada pregunta tiene una sola respuesta correcta.;;¿Qué pasa si la condición de un while nunca se vuelve falsa?;El bucle no se ejecuta;Se ejecuta una sola vez;Se produce un bucle infinito;Python la vuelve falsa automáticamente;C;;;;
+19;Listas y diccionarios;teoria;"Las listas guardan varios valores en orden dentro de corchetes: frutas = [""manzana"", ""uva""]. Se accede a cada elemento por su índice (empezando en 0) y, a diferencia de las cadenas, las listas son mutables: se pueden cambiar sus elementos.
+- append(valor) agrega un elemento al final.
+- remove(valor) elimina la primera aparición de un valor.
+- len(lista) devuelve cuántos elementos tiene.
+- valor in lista indica si el valor está en la lista.
+- sum(lista) suma los elementos numéricos.
+Un bucle for recorre la lista elemento por elemento.
+
+Los diccionarios guardan pares clave: valor dentro de llaves: alumno = {""nombre"": ""Sofía"", ""edad"": 16}. Se accede a un valor por su clave (alumno[""nombre""]) y se agrega o modifica un valor asignándolo a una clave (alumno[""grado""] = ""Segundo""). Si la clave no existe, alumno[""x""] produce un KeyError; alumno.get(""x"") devuelve None en su lugar.
+
+Para recorrer un diccionario se usan keys() (claves), values() (valores) o items() (pares clave-valor).";"frutas = [""manzana"", ""plátano"", ""uva""]
+frutas.append(""mango"")
+print(frutas[1])       # plátano
+print(len(frutas))     # 4
+for fruta in frutas:
+    print(fruta)
+
+alumno = {""nombre"": ""Sofía"", ""edad"": 16}
+alumno[""grado""] = ""Segundo""
+print(alumno[""nombre""])   # Sofía
+for clave, valor in alumno.items():
+    print(clave, ""->"", valor)";;;;;;;;;;
+20;Práctica: Listas y diccionarios;practica;Pon en práctica lo aprendido en el tema «Listas y diccionarios». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Agrega la calificación 8 a la lista con append() y muestra el promedio de todas las calificaciones usando sum() y len().;"calificaciones = [8, 9, 7, 10, 6]
+# Agrega la calificación 8 y muestra el promedio
+";8.0;
+20;Práctica: Listas y diccionarios;practica;Pon en práctica lo aprendido en el tema «Listas y diccionarios». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;"Aumenta en 10 la cantidad de ""cuadernos"" y después recorre el diccionario con items() para mostrar cada producto con el formato lápices: 12 (una línea por producto).";"inventario = {""lápices"": 12, ""cuadernos"": 5, ""gomas"": 8}
+# Suma 10 cuadernos y muestra cada producto con su cantidad
+";"lápices: 12
+cuadernos: 15
+gomas: 8";
+21;Evaluación: Listas y diccionarios;examen;Responde las siguientes preguntas sobre el tema «Listas y diccionarios». Cada pregunta tiene una sola respuesta correcta.;;Si numeros = [10, 20, 30], ¿qué devuelve numeros[1]?;10;30;20;Un error;C;;;;
+21;Evaluación: Listas y diccionarios;examen;Responde las siguientes preguntas sobre el tema «Listas y diccionarios». Cada pregunta tiene una sola respuesta correcta.;;¿Qué método agrega un elemento al final de una lista?;append();add();push();insert_end();A;;;;
+21;Evaluación: Listas y diccionarios;examen;Responde las siguientes preguntas sobre el tema «Listas y diccionarios». Cada pregunta tiene una sola respuesta correcta.;;"¿Cómo se obtiene el valor asociado a la clave ""edad"" en el diccionario persona?";persona.edad;persona[edad()];"persona(""edad"")";"persona[""edad""]";D;;;;
+21;Evaluación: Listas y diccionarios;examen;Responde las siguientes preguntas sobre el tema «Listas y diccionarios». Cada pregunta tiene una sola respuesta correcta.;;"¿Qué devuelve len([""a"", ""b"", ""c"", ""d""])?";3;4;5;"""abcd""";B;;;;
+21;Evaluación: Listas y diccionarios;examen;Responde las siguientes preguntas sobre el tema «Listas y diccionarios». Cada pregunta tiene una sola respuesta correcta.;;¿Qué método de un diccionario devuelve sus pares clave-valor para recorrerlos?;items();pairs();values();entries();A;;;;
+22;Funciones;teoria;"Una función es un bloque de código con nombre que realiza una tarea y se puede reutilizar las veces que haga falta. Ayuda a organizar el programa y a no repetir código.
+
+Se define con la palabra clave def, seguida del nombre, los parámetros entre paréntesis y dos puntos; el cuerpo va indentado. Para ejecutarla se llama por su nombre pasando los argumentos: saludar(""Ana"").
+
+return devuelve un resultado a quien llamó la función y termina su ejecución. Si una función no tiene return, devuelve None. No es lo mismo mostrar un valor con print() que devolverlo con return: un valor devuelto se puede guardar en una variable o usar en otros cálculos.
+
+Los parámetros pueden tener valores por defecto, que se usan cuando no se pasa ese argumento: def saludar(nombre, saludo=""Hola"").
+
+Alcance: las variables creadas dentro de una función son locales, es decir, solo existen dentro de ella y desaparecen cuando la función termina.";"def saludar(nombre, saludo=""Hola""):
+    """"""Devuelve un saludo personalizado.""""""
+    return f""¡{saludo}, {nombre}!""
+
+print(saludar(""Carlos""))                  # ¡Hola, Carlos!
+print(saludar(""Elena"", ""Buenos días""))    # ¡Buenos días, Elena!
+
+def area_rectangulo(base, altura):
+    return base * altura
+
+resultado = area_rectangulo(4, 5)
+print(resultado)   # 20";;;;;;;;;;
+23;Práctica: Funciones;practica;Pon en práctica lo aprendido en el tema «Funciones». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Completa la función es_par para que devuelva True si el número es par y False si no lo es. No cambies las llamadas a print().;"def es_par(numero):
+    # Devuelve True si numero es par y False si no
+    pass
+
+
+print(es_par(4))
+print(es_par(7))
+";"True
+False";
+23;Práctica: Funciones;practica;Pon en práctica lo aprendido en el tema «Funciones». Escribe tu solución en el editor, ejecútala y compara lo que aparece en la consola con la salida esperada.;;;;;;;;Completa la función calcular_total para que devuelva precio * cantidad menos el porcentaje indicado en descuento (por defecto 0). Por ejemplo, con precio 100, cantidad 3 y descuento 10 debe devolver 270.0. No cambies las llamadas a print().;"def calcular_total(precio, cantidad, descuento=0):
+    # Devuelve el subtotal menos el porcentaje de descuento
+    pass
+
+
+print(calcular_total(100, 3))
+print(calcular_total(100, 3, 10))
+";"300.0
+270.0";
+24;Evaluación: Funciones;examen;Responde las siguientes preguntas sobre el tema «Funciones». Cada pregunta tiene una sola respuesta correcta.;;¿Qué palabra clave se usa para definir una función?;function;def;func;define;B;;;;
+24;Evaluación: Funciones;examen;Responde las siguientes preguntas sobre el tema «Funciones». Cada pregunta tiene una sola respuesta correcta.;;¿Qué devuelve una función que no tiene la instrucción return?;0;Una cadena vacía;None;Un error;C;;;;
+24;Evaluación: Funciones;examen;Responde las siguientes preguntas sobre el tema «Funciones». Cada pregunta tiene una sola respuesta correcta.;;Si def doble(n): return n * 2, ¿qué devuelve doble(doble(3))?;6;9;3;12;D;;;;
+24;Evaluación: Funciones;examen;Responde las siguientes preguntas sobre el tema «Funciones». Cada pregunta tiene una sola respuesta correcta.;;"En def saludar(nombre, saludo=""Hola""), ¿qué significa saludo=""Hola""?";Que saludo es un parámetro con valor por defecto;"Que saludo siempre valdrá ""Hola""";Que saludo es una variable global;"Que la función devuelve ""Hola""";A;;;;
+24;Evaluación: Funciones;examen;Responde las siguientes preguntas sobre el tema «Funciones». Cada pregunta tiene una sola respuesta correcta.;;¿Dónde se puede usar una variable creada dentro de una función?;Solo dentro de esa función;En cualquier parte del programa;Solo fuera de la función, después de llamarla;En todas las funciones del mismo archivo;A;;;;

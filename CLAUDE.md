@@ -39,7 +39,8 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 ### Scripts de base de datos (ignorados por git, existen solo localmente)
 
 - `crear_tablas.py` (raíz): usa imports `api.core...` / `api.models...` → ejecútalo **desde la raíz**: `python crear_tablas.py`.
-- `api/importar_curso.py`: usa imports `core...` / `models...` y abre `curso_python_basico.csv` con ruta relativa al directorio actual → ejecútalo con `PYTHONPATH=api` y desde el directorio donde esté el CSV.
+- `api/importar_curso.py`: usa imports `core...` / `models...` → ejecútalo **desde `api/`**: `python importar_curso.py [ruta.csv]` (por defecto `api/curso_python_basico.csv`). Valida todo el CSV antes de insertar, inserta el curso en una sola transacción y se niega a importar si ya existe un curso con el mismo título. `importar_curso(db, ruta)` recibe la sesión, así que se puede probar con SQLite. Formato del CSV en `.claude/rules/ingesta-cursos.md`.
+- `api/curso_python_basico.csv`: curso introductorio (8 temas × teoría/práctica/evaluación = 24 módulos, 16 ejercicios, 40 preguntas).
 
 ### Docker
 
