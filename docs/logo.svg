@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="120" height="120">
+  <!-- Isotipo de OrizaLearn (mismo dibujo que frontOri/src/components/logo.tsx) sobre fondo crema -->
+  <rect width="32" height="32" rx="8" fill="#FFF8F1"/>
+  <g transform="translate(4 4)">
+    <circle cx="18" cy="6" r="4" fill="#FFC53D"/>
+    <path fill="#2A2438" d="M12 2L1 21h22L12 2zm0 4.19L20.1 20H3.9L12 6.19z"/>
+    <path fill="#FF6B4A" d="M11 11h2v2h-2z"/>
+  </g>
+</svg>

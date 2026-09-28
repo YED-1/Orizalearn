@@ -21,15 +21,11 @@ en módulos cortos y precisos pensados para que dediques tu tiempo a practicar.
 
 </div>
 
-<!-- Captura principal: página de inicio completa (sección hero), guardada en docs/capturas/landing.png -->
-
 ![Página de inicio de OrizaLearn](docs/capturas/landing.png)
 
 ## ¿Por qué OrizaLearn?
 
-Creemos que aprender no debería tener precio. En OrizaLearn no hay suscripciones ni pagos ocultos: al registrarte tienes acceso a **todo el catálogo**, y tú decides qué aprender y cuándo.
-
-> ✅ Sin tarjeta &nbsp;·&nbsp; ✅ Sin planes premium &nbsp;·&nbsp; ✅ Todos los cursos incluidos
+Creemos que aprender no debería tener precio. En OrizaLearn no hay suscripciones: al registrarte tienes acceso a **todo el catálogo**, y tú decides qué aprender y cuándo.
 
 ## Características
 
@@ -55,8 +51,6 @@ Cada curso se divide en temas, y cada tema sigue el mismo recorrido:
 El primer curso disponible es **Python básico**: 8 temas, desde los primeros pasos hasta escribir tus propios programas.
 
 ## Galería
-
-<!-- Reemplaza estas rutas por capturas reales guardadas en docs/capturas/ -->
 
 |                       Registro                        |                 Panel del estudiante                 |
 | :---------------------------------------------------: | :--------------------------------------------------: |
