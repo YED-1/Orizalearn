@@ -14,7 +14,7 @@ from sqlalchemy.pool import StaticPool
 from core.database import get_db
 from main import app
 from models.course import Course, Module, Ejercicio, Pregunta, Opcion
-from models.user import User
+from models.user import FotoPerfil, User
 
 motor_pruebas = create_engine(
     "sqlite://",
@@ -27,6 +27,7 @@ SesionPruebas = sessionmaker(autocommit=False, autoflush=False, bind=motor_prueb
 # Tablas que usan las pruebas, en orden de creación (padres antes que hijos)
 TABLAS_PRUEBAS = [
     User.__table__,
+    FotoPerfil.__table__,
     Course.__table__,
     Module.__table__,
     Ejercicio.__table__,

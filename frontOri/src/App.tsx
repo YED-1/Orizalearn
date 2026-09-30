@@ -6,6 +6,7 @@ import DashboardLayout from "./layouts/dashboardlayout";
 import DashboardHome from "./components/dashboard/dasboardhome";
 import MisCursos from "./components/dashboard/miscursos";
 import DetalleCurso from "./components/dashboard/detallecurso";
+import Ajustes from "./components/dashboard/settings";
 import LandingPage from "./features/landing/landingpage";
 
 function App() {
@@ -58,6 +59,15 @@ function App() {
           element={
             <DashboardLayout>
               <DetalleCurso />
+            </DashboardLayout>
+          }
+        />
+
+        <Route
+          path="/dashboard/ajustes"
+          element={
+            <DashboardLayout>
+              <Ajustes />
             </DashboardLayout>
           }
         />

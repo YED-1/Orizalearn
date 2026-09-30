@@ -10,7 +10,9 @@ import {
   Settings,
   User,
 } from "lucide-react";
+import Avatar from "../avatar";
 import { api, obtenerMensajeError } from "../../lib/api";
+import { cargarFoto } from "../../lib/fotoperfil";
 
 // Coincide con UserResponse de api/schemas/user.py
 interface Usuario {
@@ -48,6 +50,11 @@ export default function MenuPerfil({ nombre }: MenuPerfilProps) {
   const [cargando, setCargando] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
   const contenedorRef = useRef<HTMLDivElement>(null);
+
+  // La foto se descarga una vez por sesión y se comparte con Ajustes
+  useEffect(() => {
+    cargarFoto();
+  }, []);
 
   // Cierra la tarjeta al hacer clic fuera o con Escape
   useEffect(() => {
@@ -104,9 +111,7 @@ export default function MenuPerfil({ nombre }: MenuPerfilProps) {
             Estudiante
           </span>
         </span>
-        <span className="w-10 h-10 bg-oriza-sol-suave rounded-full flex items-center justify-center border-2 border-oriza-coral overflow-hidden">
-          <User className="w-6 h-6 text-oriza-tinta/70" />
-        </span>
+        <Avatar tamano="w-10 h-10" />
       </button>
 
       {abierto && (
@@ -133,9 +138,7 @@ export default function MenuPerfil({ nombre }: MenuPerfilProps) {
             <>
               {/* Encabezado con iniciales */}
               <div className="bg-oriza-sol-suave px-6 pt-6 pb-5 flex items-center gap-4">
-                <span className="w-14 h-14 shrink-0 rounded-full bg-white border-2 border-oriza-coral flex items-center justify-center text-lg font-extrabold text-oriza-tinta">
-                  {iniciales(usuario)}
-                </span>
+                <Avatar tamano="w-14 h-14" iniciales={iniciales(usuario)} />
                 <div className="min-w-0">
                   <p className="font-extrabold text-oriza-tinta leading-tight truncate">
                     {usuario.nombre} {usuario.apellido}

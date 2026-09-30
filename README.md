@@ -56,6 +56,10 @@ El primer curso disponible es **Python básico**: 8 temas, desde los primeros pa
 | :---------------------------------------------------: | :--------------------------------------------------: |
 | ![Formulario de registro](docs/capturas/registro.png) | ![Panel del estudiante](docs/capturas/dashboard.png) |
 
+|                Detalle de los cursos                 |                 Panel del estudiante                 |
+| :--------------------------------------------------: | :--------------------------------------------------: |
+| ![Formulario de registro](docs/capturas/detalle.png) | ![Panel del estudiante](docs/capturas/dashboard.png) |
+
 ## Tecnologías
 
 | Capa                | Herramientas                                                                                                                |
