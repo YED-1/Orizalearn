@@ -3,6 +3,7 @@ import os
 
 # Debe definirse antes de importar la app; load_dotenv no sobrescribe variables ya existentes
 os.environ["DATABASE_URL"] = "postgresql://pruebas:pruebas@localhost:5432/pruebas"
+os.environ["JWT_SECRET"] = "clave-solo-para-pruebas"
 
 import pytest
 from fastapi.testclient import TestClient

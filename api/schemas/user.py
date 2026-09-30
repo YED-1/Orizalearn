@@ -9,6 +9,18 @@ Nombre = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, m
 Correo = Annotated[EmailStr, Field(max_length=100)]
 Genero = Literal["Masculino", "Femenino", "Otro", "Prefiero no decirlo"]
 
+# Regla de contraseña compartida por el registro y el cambio de contraseña
+def validar_password(valor: str) -> str:
+    if len(valor) < 12:
+        raise ValueError('La contraseña debe tener al menos 12 caracteres.')
+    # Un símbolo es cualquier carácter que no sea letra, número ni espacio (p. ej. ! @ # - _ .)
+    if not any(not c.isalnum() and not c.isspace() for c in valor):
+        raise ValueError('La contraseña debe incluir al menos un símbolo (por ejemplo: ! @ # $ % - _).')
+    # bcrypt solo usa los primeros 72 bytes; más allá los ignoraría en silencio
+    if len(valor.encode('utf-8')) > 72:
+        raise ValueError('La contraseña no puede superar los 72 caracteres.')
+    return valor
+
 # Lo que que necesita el sistema para crear un usuario; Contiene los campos comunes para el registro
 class UserBase(BaseModel):
     nombre: str
@@ -30,15 +42,7 @@ class UserCreate(UserBase):
     @field_validator('password')
     @classmethod
     def validar_longitud_password(cls, valor: str) -> str:
-        if len(valor) < 12:
-            raise ValueError('La contraseña debe tener al menos 12 caracteres.')
-        # Un símbolo es cualquier carácter que no sea letra, número ni espacio (p. ej. ! @ # - _ .)
-        if not any(not c.isalnum() and not c.isspace() for c in valor):
-            raise ValueError('La contraseña debe incluir al menos un símbolo (por ejemplo: ! @ # $ % - _).')
-        # bcrypt solo usa los primeros 72 bytes; más allá los ignoraría en silencio
-        if len(valor.encode('utf-8')) > 72:
-            raise ValueError('La contraseña no puede superar los 72 caracteres.')
-        return valor
+        return validar_password(valor)
 
     @model_validator(mode='after')
     def check_passwords_match(self) -> 'UserCreate':
@@ -58,3 +62,33 @@ class UserResponse(UserBase):
     score: float
 
     model_config = ConfigDict(from_attributes=True)
+
+# --- Ajustes de la cuenta del propio usuario (/usuarios/yo) ---
+
+# Datos personales editables; el correo y la contraseña tienen su propio endpoint
+class UsuarioActualizar(BaseModel):
+    nombre: Nombre
+    apellido: Nombre
+    fecha_nacimiento: date
+    genero: Genero
+
+# Cambiar el correo exige confirmar con la contraseña actual
+class CambioCorreo(BaseModel):
+    email: Correo
+    password_actual: str
+
+class CambioContrasena(BaseModel):
+    password_actual: str
+    password: str
+    confirm_password: str
+
+    @field_validator('password')
+    @classmethod
+    def validar_nueva_password(cls, valor: str) -> str:
+        return validar_password(valor)
+
+    @model_validator(mode='after')
+    def check_passwords_match(self) -> 'CambioContrasena':
+        if self.password != self.confirm_password:
+            raise ValueError('Las contraseñas no coinciden.')
+        return self

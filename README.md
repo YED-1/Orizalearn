@@ -75,7 +75,7 @@ OrizaLearn está en desarrollo activo. Esto es lo que ya funciona y lo que viene
 - [x] Ejecución segura de código Python en contenedores aislados
 - [ ] Catálogo y detalle de cursos dentro del panel del estudiante
 - [ ] Evaluaciones interactivas
-- [ ] Sesiones con JWT
+- [x] Sesiones con JWT
 - [ ] Calificación automática de ejercicios
 - [ ] Seguimiento del progreso
 - [ ] Verificación de correo electrónico

@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Mail, Lock, ArrowRight, User, Calendar, Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { validarPassword } from "../lib/validaciones";
 
 // Tiempo máximo de espera de la respuesta del servidor
 const TIEMPO_LIMITE_MS = 20000;
-
-// Un símbolo es cualquier carácter que no sea letra, número ni espacio (igual que en schemas/user.py)
-const tieneSimbolo = (texto: string) => /[^\p{L}\p{N}\s]/u.test(texto);
 
 export default function SignForm() {
   const navigate = useNavigate();
@@ -36,20 +34,9 @@ export default function SignForm() {
     setMensajeExito("");
 
     // Validar la contraseña y que ambas coincidan antes de enviar
-    if (password.length < 12) {
-      setMensajeError("La contraseña debe tener al menos 12 caracteres.");
-      return;
-    }
-
-    if (!tieneSimbolo(password)) {
-      setMensajeError(
-        "La contraseña debe incluir al menos un símbolo (por ejemplo: ! @ # $ % - _).",
-      );
-      return;
-    }
-
-    if (password !== confirmpassword) {
-      setMensajeError("Las contraseñas no coinciden.");
+    const errorPassword = validarPassword(password, confirmpassword);
+    if (errorPassword) {
+      setMensajeError(errorPassword);
       return;
     }
 

@@ -1,6 +1,14 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, BookOpen, LogOut, User } from "lucide-react";
+import { useSyncExternalStore } from "react";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Home, BookOpen, LogOut } from "lucide-react";
 import Logo from "../components/logo";
+import MenuPerfil from "../components/dashboard/menuperfil";
+import {
+  cerrarSesion,
+  obtenerNombre,
+  obtenerToken,
+  suscribirSesion,
+} from "../lib/sesion";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -11,15 +19,22 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Leemos el nombre guardado en el login. Si por alguna razón no hay nada, muestra "Usuario"
-  const userName = localStorage.getItem("userName") || "Usuario";
+  // Nombre guardado en el login; se actualiza solo si se edita en Ajustes
+  const userName =
+    useSyncExternalStore(suscribirSesion, obtenerNombre) || "Usuario";
+  const token = useSyncExternalStore(suscribirSesion, obtenerToken);
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    localStorage.removeItem("userName"); // Limpiamos la memoria
+    cerrarSesion(); // Limpiamos todo lo guardado en el login
 
     navigate("/login"); // Redirigimos al inicio de sesión
   };
+
+  // Sin sesión no se puede entrar al panel
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="flex h-screen bg-oriza-crema text-oriza-tinta">
@@ -77,21 +92,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Barra superior (Topbar) */}
         <header className="h-16 bg-white border-b border-oriza-tinta/10 flex items-center justify-end px-8 z-10">
-          <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="flex flex-col text-right">
-              <span className="text-sm font-bold text-oriza-tinta leading-tight">
-                {userName}
-              </span>
-              <span className="text-xs text-oriza-tinta/70 font-semibold">
-                Estudiante
-              </span>
-            </div>
-
-            {/* Foto de perfil o Ícono */}
-            <div className="w-10 h-10 bg-oriza-sol-suave rounded-full flex items-center justify-center border-2 border-oriza-coral overflow-hidden">
-              <User className="w-6 h-6 text-oriza-tinta/70" />
-            </div>
-          </div>
+          <MenuPerfil nombre={userName} />
         </header>
 
         {/* Contenedor del contenido inyectado (DashboardHome o MisCursos) */}

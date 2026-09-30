@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom"; // Añadimos useNavigate
+import { guardarSesion } from "../lib/sesion";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ export default function LoginForm() {
       if (response.ok) {
         setMensajeExito("¡Inicio de sesión exitoso!");
         // Redirigimos al dashboard tras el éxito
-        localStorage.setItem("userName", data.nombre || email);
+        guardarSesion(data.access_token, data.nombre || email);
         navigate("/dashboard");
       } else {
         setMensajeError(

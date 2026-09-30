@@ -7,6 +7,7 @@ from routers import courses
 from routers import exercises
 from routers import modules
 from routers import questions
+from routers import usuarios
 
 # Se quitó el base metadata para que ya se no se creen nuevas tablas en local, ya migré a supabase
 
@@ -18,6 +19,7 @@ app.include_router(courses.router)
 app.include_router(exercises.router)
 app.include_router(modules.router)
 app.include_router(questions.router)
+app.include_router(usuarios.router)
 
 # Configuración CORS
 

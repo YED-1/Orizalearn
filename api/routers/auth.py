@@ -63,8 +63,19 @@ def login_user(user_credentials: UserLogin, db: Session = Depends(get_db)):
             detail="Contraseña incorrecta."
         )
     
-    # Si todo está bien, le mandamos el nombre al frontend para el localStorage
+    # Si todo está bien, emitimos el token de sesión y mandamos el nombre para el localStorage
+    try:
+        token = auth_service.crear_token(user.id)
+    except auth_service.ErrorConfiguracionJWT:
+        logger.exception("No se pudo emitir el token de sesión")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="No se pudo iniciar sesión. Intenta de nuevo más tarde."
+        )
+
     return {
-        "mensaje": "Login exitoso", 
-        "nombre": user.nombre 
+        "mensaje": "Login exitoso",
+        "nombre": user.nombre,
+        "access_token": token,
+        "token_type": "bearer",
     }

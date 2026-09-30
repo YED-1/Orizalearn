@@ -1,8 +1,14 @@
 # Script para autenticar al usuario registrado, agregando un algoritmo de hashing
 
+import os
+from datetime import datetime, timedelta, timezone
+import jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
+from core.database import get_db
 from models.user import User 
 from schemas.user import UserCreate 
 
@@ -46,3 +52,58 @@ def create_user(db: Session, user: UserCreate):
         raise
     
     return db_user
+
+
+# --- Sesiones con JWT ---
+
+ALGORITMO_JWT = "HS256"
+MINUTOS_EXPIRACION_POR_DEFECTO = 60 * 24
+
+class ErrorConfiguracionJWT(RuntimeError):
+    pass
+
+# La clave se lee del .env en cada uso, para que las pruebas puedan fijarla
+def _clave_jwt() -> str:
+    clave = os.getenv("JWT_SECRET")
+    if not clave:
+        raise ErrorConfiguracionJWT("Falta la variable JWT_SECRET en el .env")
+    return clave
+
+def crear_token(usuario_id: int) -> str:
+    minutos = int(os.getenv("JWT_MINUTOS_EXPIRACION", MINUTOS_EXPIRACION_POR_DEFECTO))
+    ahora = datetime.now(timezone.utc)
+    datos = {"sub": str(usuario_id), "iat": ahora, "exp": ahora + timedelta(minutes=minutos)}
+    return jwt.encode(datos, _clave_jwt(), algorithm=ALGORITMO_JWT)
+
+# Devuelve el id del usuario del token, o None si el token no es válido o expiró
+def leer_token(token: str) -> int | None:
+    try:
+        datos = jwt.decode(token, _clave_jwt(), algorithms=[ALGORITMO_JWT])
+        return int(datos["sub"])
+    except (jwt.PyJWTError, KeyError, ValueError):
+        return None
+
+# auto_error=False para responder nosotros con 401 y mensaje en español
+esquema_bearer = HTTPBearer(auto_error=False)
+
+SESION_INVALIDA = "Tu sesión expiró o no es válida. Inicia sesión de nuevo."
+
+# Dependencia para los endpoints protegidos: devuelve el usuario dueño del token
+def obtener_usuario_actual(
+    credenciales: HTTPAuthorizationCredentials | None = Depends(esquema_bearer),
+    db: Session = Depends(get_db),
+) -> User:
+    no_autorizado = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail=SESION_INVALIDA,
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    if credenciales is None:
+        raise no_autorizado
+    usuario_id = leer_token(credenciales.credentials)
+    if usuario_id is None:
+        raise no_autorizado
+    usuario = db.query(User).filter(User.id == usuario_id).first()
+    if not usuario or usuario.is_active is False:
+        raise no_autorizado
+    return usuario
