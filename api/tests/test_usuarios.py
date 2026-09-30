@@ -60,6 +60,15 @@ def test_sin_token_valido_devuelve_401(cliente, usuario, cabeceras_invalidas):
     assert r.json() == {"detail": auth_service.SESION_INVALIDA}
 
 
+def test_sin_clave_jwt_endpoint_protegido_devuelve_500(cliente, cabeceras, monkeypatch):
+    monkeypatch.delenv("JWT_SECRET")
+
+    r = cliente.get("/usuarios/yo", headers=cabeceras)
+
+    assert r.status_code == 500
+    assert r.json() == {"detail": "No se pudo verificar tu sesión. Intenta de nuevo más tarde."}
+
+
 def test_token_expirado_devuelve_401(cliente, usuario):
     vencido = datetime.now(timezone.utc) - timedelta(minutes=1)
     token = jwt.encode({"sub": str(usuario["id"]), "exp": vencido}, "clave-solo-para-pruebas", algorithm="HS256")

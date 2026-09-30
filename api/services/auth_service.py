@@ -1,5 +1,6 @@
 # Script para autenticar al usuario registrado, agregando un algoritmo de hashing
 
+import logging
 import os
 from datetime import datetime, timedelta, timezone
 import jwt
@@ -11,6 +12,8 @@ from sqlalchemy.orm import Session
 from core.database import get_db
 from models.user import User 
 from schemas.user import UserCreate 
+
+logger = logging.getLogger(__name__)
 
 # Configuramos bcrypt como nuestro algoritmo de hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -62,6 +65,10 @@ MINUTOS_EXPIRACION_POR_DEFECTO = 60 * 24
 class ErrorConfiguracionJWT(RuntimeError):
     pass
 
+# El .env solo se lee al arrancar: si falta la clave, avisarlo en la consola desde el inicio
+if not os.getenv("JWT_SECRET"):
+    logger.warning("Falta JWT_SECRET en el .env: el inicio de sesión fallará hasta definirla y reiniciar la API.")
+
 # La clave se lee del .env en cada uso, para que las pruebas puedan fijarla
 def _clave_jwt() -> str:
     clave = os.getenv("JWT_SECRET")
@@ -100,7 +107,14 @@ def obtener_usuario_actual(
     )
     if credenciales is None:
         raise no_autorizado
-    usuario_id = leer_token(credenciales.credentials)
+    try:
+        usuario_id = leer_token(credenciales.credentials)
+    except ErrorConfiguracionJWT:
+        logger.exception("No se pudo verificar el token de sesión")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="No se pudo verificar tu sesión. Intenta de nuevo más tarde.",
+        )
     if usuario_id is None:
         raise no_autorizado
     usuario = db.query(User).filter(User.id == usuario_id).first()
