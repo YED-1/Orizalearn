@@ -53,15 +53,15 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 - Los imports son relativos a `api/` (`from core.database import get_db`, `from models.course import ...`), por eso uvicorn debe arrancar desde `api/`. Los paquetes no tienen `__init__.py`.
 - `main.py` registra solo los routers `auth`, `courses`, `exercises`, `modules` y `questions`. CORS abierto (`*`). La creación automática de tablas está desactivada a propósito (la BD vive en Supabase).
 - Modelos: todo el dominio está en `models/course.py` (`Course` → `Module` → `Ejercicio` / `Pregunta` → `Opcion`, con cascada). Tablas con nombres en español: `cursos`, `modulos`, `ejercicios`, `preguntas`, `opciones`; más `users` y `evaluaciones`. `Module.tipo_modulo` (`teoria` | `practica` | `examen`) indica al frontend qué renderizar.
-- Schemas duplicados: `schemas/course.py` define versiones anidadas (Course → Modules → Ejercicios/Preguntas) usadas por `GET /cursos/`; `schemas/module.py`, `exercise.py` y `question.py` definen versiones planas usadas por los routers de creación. Al cambiar un campo del modelo, actualiza ambos.
-- Endpoints existentes: `/auth/register`, `/auth/login`, `/cursos/`, `/cursos/crear`, `/modulos/crear`, `/modulos/curso/{curso_id}`, `/ejercicios/crear`, `/ejercicios/modulo/{modulo_id}`, `/ejercicios/ejecutar-python` (sandbox Docker), `/preguntas/crear`.
+- Schemas duplicados: `schemas/course.py` define versiones anidadas (Course → Modules → Ejercicios/Preguntas, usadas por `POST /cursos/crear`) y las de lectura del estudiante `CursoResumen` / `CursoDetalle` / `ModuloResumen` (solo totales, sin `solucion_esperada` ni `es_correcta`); `schemas/module.py`, `exercise.py` y `question.py` definen versiones planas usadas por los routers de creación. Al cambiar un campo del modelo, actualiza ambos.
+- Endpoints existentes: `/auth/register`, `/auth/login`, `GET /cursos/` (catálogo: `CursoResumen`), `GET /cursos/{curso_id}` (detalle con temario ordenado: `CursoDetalle`), `/cursos/crear`, `/modulos/crear`, `/modulos/curso/{curso_id}`, `/ejercicios/crear`, `/ejercicios/modulo/{modulo_id}`, `/ejercicios/ejecutar-python` (sandbox Docker), `/preguntas/crear`.
 - Sandbox: `routers/exercises.py` crea el cliente con `obtener_cliente_docker()` en el primer uso; si Docker no está disponible, la API arranca igual y el endpoint responde 500 con mensaje amigable.
 - Errores de validación: `main.py` convierte los 422 de FastAPI en `{"detail": "<texto en español>"}` (`traducir_error_validacion`), porque el frontend muestra `data.detail` tal cual. Los mensajes de validadores propios (`ValueError`) se muestran sin cambios.
 
 ### Frontend
 
-- Rutas en `src/App.tsx`: `/login`, `/registro`, `/dashboard`, `/dashboard/courses`; cualquier otra redirige a `/login`. Los layouts (`AuthLayout`, `DashboardLayout`) envuelven cada página mediante `children`, no con `<Outlet>`.
-- Llamadas a la API: URLs codificadas en cada componente, mezclando `fetch` y `axios`, y `localhost` con `127.0.0.1`. No hay cliente HTTP centralizado ni variable de entorno para la URL base.
+- Rutas en `src/App.tsx`: `/` (landing), `/login`, `/registro`, `/dashboard` (catálogo), `/dashboard/courses` (Mis cursos), `/dashboard/cursos/:cursoId` (detalle); cualquier otra redirige a `/`. Los layouts (`AuthLayout`, `DashboardLayout`) envuelven cada página mediante `children`, no con `<Outlet>`.
+- Llamadas a la API: el código nuevo usa el cliente centralizado `src/lib/api.ts` (`api`, instancia de axios con la URL base, y `obtenerMensajeError` para leer `detail`). `loginform.tsx`, `signform.tsx` y `evaluacionestudiante.tsx` aún usan `fetch` con URLs codificadas.
 - Sesión: solo `localStorage.userName` (lo guarda `loginform.tsx`, lo borra el logout de `dashboardlayout.tsx`). No hay rutas protegidas.
 - Estilos: Tailwind con la paleta propia "Amanecer" (`tailwind.config.js`): `oriza-crema` (fondo), `oriza-tinta` (texto), `oriza-coral`, `oriza-sol`, `oriza-menta` y `oriza-lila`, con variantes `-suave` / `-fuerte`. Tipografía Nunito (Google Fonts, cargada en `index.html`). Iconos con `lucide-react`. `App.css` es un residuo de la plantilla de Vite.
 
@@ -70,6 +70,6 @@ Hay un virtualenv local en `api/venv/` (ignorado por git). Requiere `DATABASE_UR
 - **JWT no está implementado**: `/auth/login` devuelve solo `{mensaje, nombre}`; `services/auth_service.py` únicamente hace hash/verificación con bcrypt.
 - **`routers/evaluaciones.py` (migración CSV) está roto y no registrado** en `main.py`: importa `from models import Modulo` (no existe; el modelo es `Module`) y usa campos (`numero`, `teoria`, `nivel_bloom`, ...) que no existen en los modelos.
 - **`features/evaluations/evaluacionestudiante.tsx` no está enrutado** y llama a endpoints inexistentes (`/courses/1`, `/courses/1/modules`, `/modules/{id}/questions`, `POST /evaluaciones/`) esperando campos (`nombre`, `abreviatura`) que el backend no devuelve.
-- `components/dashboard/detallecurso.tsx` está vacío; `MisCursos` es solo un estado vacío estático.
+- `MisCursos` es solo un estado vacío estático (no hay inscripciones). En el detalle del curso, "Empezar curso" está deshabilitado ("Próximamente") hasta que exista el visor de módulos.
 - La barra lateral colapsable del dashboard aún no existe (`dashboardlayout.tsx` tiene ancho fijo `w-64`).
 - Pendientes listados en el README: telemetría, verificación de correo, chatbot y calificación automática comparando la salida del sandbox con `solucion_esperada`.

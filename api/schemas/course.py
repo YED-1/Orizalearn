@@ -88,3 +88,31 @@ class CourseResponse(CourseBase):
     modulos: List[ModuleResponse] = []
 
     model_config = ConfigDict(from_attributes=True)
+
+# ESQUEMAS DE LECTURA PARA EL ESTUDIANTE (catálogo y detalle)
+# No anidan ejercicios ni preguntas: nunca exponen solucion_esperada ni es_correcta
+class ModuloResumen(BaseModel):
+    id: int
+    titulo: str
+    orden: int
+    tipo_modulo: TipoModulo
+    contenido_texto: str
+    recurso_url: Optional[str] = None
+    total_ejercicios: int
+    total_preguntas: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+class CursoResumen(BaseModel):
+    id: int
+    titulo: str
+    descripcion: str
+    imagen: str
+    total_modulos: int
+    total_ejercicios: int
+    total_preguntas: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+class CursoDetalle(CursoResumen):
+    modulos: List[ModuloResumen] = []

@@ -5,6 +5,7 @@ import SignForm from "./components/signform";
 import DashboardLayout from "./layouts/dashboardlayout";
 import DashboardHome from "./components/dashboard/dasboardhome";
 import MisCursos from "./components/dashboard/miscursos";
+import DetalleCurso from "./components/dashboard/detallecurso";
 import LandingPage from "./features/landing/landingpage";
 
 function App() {
@@ -48,6 +49,15 @@ function App() {
           element={
             <DashboardLayout>
               <MisCursos />
+            </DashboardLayout>
+          }
+        />
+
+        <Route
+          path="/dashboard/cursos/:cursoId"
+          element={
+            <DashboardLayout>
+              <DetalleCurso />
             </DashboardLayout>
           }
         />

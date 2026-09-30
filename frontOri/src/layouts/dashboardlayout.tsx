@@ -37,7 +37,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <Link
             to="/dashboard"
             className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors font-bold ${
-              location.pathname === "/dashboard"
+              // El detalle de un curso forma parte del catálogo de Inicio
+              location.pathname === "/dashboard" ||
+              location.pathname.startsWith("/dashboard/cursos/")
                 ? "bg-oriza-coral-suave text-oriza-coral-fuerte"
                 : "text-oriza-tinta/70 hover:bg-oriza-crema hover:text-oriza-tinta"
             }`}

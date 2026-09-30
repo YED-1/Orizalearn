@@ -12,6 +12,7 @@ from sqlalchemy.pool import StaticPool
 
 from core.database import get_db
 from main import app
+from models.course import Course, Module, Ejercicio, Pregunta, Opcion
 from models.user import User
 
 motor_pruebas = create_engine(
@@ -22,16 +23,29 @@ motor_pruebas = create_engine(
 SesionPruebas = sessionmaker(autocommit=False, autoflush=False, bind=motor_pruebas)
 
 
+# Tablas que usan las pruebas, en orden de creación (padres antes que hijos)
+TABLAS_PRUEBAS = [
+    User.__table__,
+    Course.__table__,
+    Module.__table__,
+    Ejercicio.__table__,
+    Pregunta.__table__,
+    Opcion.__table__,
+]
+
+
 @pytest.fixture
 def db():
-    # Solo se crea la tabla users; se borra al terminar cada prueba
-    User.__table__.create(bind=motor_pruebas)
+    # Las tablas se crean en la SQLite en memoria y se borran al terminar cada prueba
+    for tabla in TABLAS_PRUEBAS:
+        tabla.create(bind=motor_pruebas)
     sesion = SesionPruebas()
     try:
         yield sesion
     finally:
         sesion.close()
-        User.__table__.drop(bind=motor_pruebas)
+        for tabla in reversed(TABLAS_PRUEBAS):
+            tabla.drop(bind=motor_pruebas)
 
 
 @pytest.fixture
